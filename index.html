@@ -1,0 +1,949 @@
+<title>AI Systems Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #090c12;
+    --bg-2: #0c1119;
+    --surface: #0f1420;
+    --surface-2: #131a28;
+    --border: #1e2738;
+    --border-soft: #171f2e;
+    --text: #e9edf5;
+    --text-dim: #aab2c5;
+    --text-mute: #6d7690;
+    --cyan: #4dd8e8;
+    --cyan-soft: rgba(77,216,232,0.12);
+    --violet: #9c8cff;
+    --violet-soft: rgba(156,140,255,0.12);
+    --green: #3ddc97;
+    --amber: #e8b64d;
+
+    --font-display: "Unbounded", "Segoe UI", sans-serif;
+    --font-body: "Manrope", "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "Consolas", monospace;
+
+    --fs-hero: clamp(2.4rem, 4.6vw + 1rem, 4.4rem);
+    --fs-h2: clamp(1.7rem, 2.2vw + 1rem, 2.5rem);
+    --fs-h3: 1.2rem;
+
+    --space-1: .25rem; --space-2: .5rem; --space-3: 1rem; --space-4: 1.5rem;
+    --space-5: 2.25rem; --space-6: 3.5rem; --space-7: 5.5rem; --space-8: 8rem;
+
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;} }
+
+  body{
+    margin:0;
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(77,216,232,0.03) 40%, transparent 70%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--cyan); color:#04131a; }
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:var(--bg); }
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:6px; }
+  :focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:2px; }
+
+  a{ color:inherit; text-decoration:none; }
+  p{ color:var(--text-dim); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--space-4); }
+  .mono{ font-family:var(--font-mono); }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:.6em;
+    font-family:var(--font-mono); font-size:.78rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--cyan);
+    margin:0 0 var(--space-3);
+  }
+  .eyebrow::before{
+    content:""; width:7px; height:7px; border-radius:2px;
+    background:var(--cyan); box-shadow:0 0 8px var(--cyan);
+    flex:none;
+  }
+
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; line-height:1.15; letter-spacing:-.01em; text-wrap:balance; margin:0; color:var(--text); }
+  h2{ font-size:var(--fs-h2); font-weight:600; position:relative; padding-bottom:var(--space-3); }
+  h2::after{ content:""; position:absolute; left:0; bottom:0; width:44px; height:3px; border-radius:3px; background:linear-gradient(90deg, var(--cyan), var(--violet)); }
+  h3{ font-size:var(--fs-h3); font-weight:600; }
+
+  .section{ padding:var(--space-7) 0; border-top:1px solid var(--border-soft); position:relative; }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:var(--space-4); flex-wrap:wrap; margin-bottom:var(--space-6); }
+  .section-tag{ font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.1em; }
+
+  .chip{
+    font-family:var(--font-mono); font-size:.74rem; letter-spacing:.03em;
+    padding:.32em .7em; border:1px solid var(--border); border-radius:5px;
+    color:var(--text-dim); background:var(--surface); white-space:nowrap;
+  }
+
+  .btn{
+    font-family:var(--font-mono); font-size:.82rem; letter-spacing:.03em;
+    padding:.85em 1.4em; border-radius:6px; border:1px solid var(--border);
+    display:inline-flex; align-items:center; gap:.6em; cursor:pointer;
+    transition:border-color .2s ease, transform .2s ease, background .2s ease;
+    background:var(--surface);
+  }
+  .btn-primary{ background:linear-gradient(135deg, var(--cyan-soft), var(--violet-soft)); border-color:rgba(77,216,232,0.4); color:var(--text); }
+  .btn:hover{ border-color:var(--cyan); transform:translateY(-2px); }
+
+  /* reveal-on-scroll */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(9,12,18,0.78); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; padding:var(--space-3) var(--space-4); max-width:var(--maxw); margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:.6em; font-family:var(--font-mono); font-size:.92rem; letter-spacing:.06em; }
+  .brand svg{ display:block; }
+  .nav-links{ display:flex; gap:var(--space-5); font-family:var(--font-mono); font-size:.78rem; letter-spacing:.05em; }
+  .nav-links a{ color:var(--text-mute); transition:color .2s ease; }
+  .nav-links a:hover{ color:var(--cyan); }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:.55em;
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.06em;
+    color:var(--green); border:1px solid rgba(61,220,151,0.35); background:rgba(61,220,151,0.06);
+    padding:.4em .8em; border-radius:100px;
+  }
+  .status-dot{ width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+  .nav-toggle{ display:none; background:none; border:1px solid var(--border); border-radius:6px; color:var(--text); padding:.5em .7em; font-family:var(--font-mono); }
+
+  /* ---------- HERO ---------- */
+  .hero{ position:relative; overflow:hidden; padding:var(--space-8) 0 var(--space-7); }
+  #hero-canvas{ position:absolute; inset:0; width:100%; height:100%; opacity:.55; pointer-events:none; }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero-grid{ display:grid; grid-template-columns:1.25fr .95fr; gap:var(--space-6); align-items:start; }
+  .hero-photo{ display:flex; flex-direction:column; align-items:center; gap:var(--space-2); justify-self:center; position:relative; margin-top:var(--space-2); }
+  .ai-avatar{ position:relative; width:220px; height:220px; }
+  .avatar-glow{
+    position:absolute; inset:-22px; border-radius:50%;
+    background:radial-gradient(circle, rgba(77,216,232,0.22), rgba(156,140,255,0.13) 55%, transparent 75%);
+    filter:blur(24px); pointer-events:none; z-index:-1;
+    animation:glow-breathe 5s ease-in-out infinite;
+  }
+  @keyframes glow-breathe{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+  .ai-avatar svg{ display:block; width:100%; height:100%; }
+  .avatar-figure{ transform-origin:150px 150px; animation:avatar-float 6s ease-in-out infinite; }
+  @keyframes avatar-float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+  .pulse-dot{ animation:core-pulse 2.4s ease-in-out infinite; }
+  @keyframes core-pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.4; } }
+  .scan-ring{ transform-origin:150px 150px; animation:scan-rotate 16s linear infinite; }
+  @keyframes scan-rotate{ to{ transform:rotate(360deg); } }
+  .photo-tag{ font-size:.68rem; letter-spacing:.1em; color:var(--text-mute); position:relative; z-index:1; }
+  .hero-name{ font-size:var(--fs-hero); max-width:14ch; line-height:1.06; }
+  .hero-name .accent{ background:linear-gradient(100deg, var(--cyan), var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-sub{ max-width:50ch; font-size:.98rem; line-height:1.7; margin:var(--space-4) 0 var(--space-5); color:var(--text-dim); }
+  .hero-ctas{ display:flex; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-6); }
+  .hero-stats{ display:grid; grid-template-columns:repeat(3,minmax(140px,1fr)); gap:var(--space-4); max-width:640px; border-top:1px solid var(--border-soft); padding-top:var(--space-4); }
+  .stat-num{ font-family:var(--font-mono); font-size:1rem; color:var(--cyan); font-variant-numeric:tabular-nums; }
+  .stat-label{ font-family:var(--font-mono); font-size:.68rem; color:var(--text-mute); letter-spacing:.08em; text-transform:uppercase; margin-top:.3em; }
+
+  /* ---------- CARD FRAME (lab bracket corners) ---------- */
+  .panel{
+    position:relative; background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    border:1px solid var(--border); border-radius:10px; padding:var(--space-5);
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .mod-card:hover, .exp-card:hover, .cert-card:hover, .edu-item:hover{
+    transform:translateY(-3px);
+    border-color:rgba(77,216,232,0.4);
+    box-shadow:0 14px 34px -18px rgba(77,216,232,0.35);
+  }
+  .panel::before, .panel::after{
+    content:""; position:absolute; width:14px; height:14px; pointer-events:none;
+    border-color:var(--cyan); opacity:.55;
+  }
+  .panel::before{ top:-1px; left:-1px; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); border-top-left-radius:6px; }
+  .panel::after{ bottom:-1px; right:-1px; border-bottom:2px solid var(--violet); border-right:2px solid var(--violet); border-bottom-right-radius:6px; }
+
+  /* ---------- PROFILE ---------- */
+  .profile-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:var(--space-6); align-items:start; }
+  .profile-grid p{ font-size:1.02rem; }
+  .edu-list{ display:flex; flex-direction:column; gap:var(--space-3); }
+  .edu-item{ padding:var(--space-4); }
+  .edu-item .deg{ font-family:var(--font-display); font-size:1rem; font-weight:600; margin-bottom:.3em; }
+  .edu-item .school{ color:var(--text-dim); font-size:.92rem; }
+  .edu-item .when{ font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); margin-top:.5em; display:flex; justify-content:space-between; align-items:center; }
+  .badge{ font-family:var(--font-mono); font-size:.65rem; letter-spacing:.06em; padding:.25em .55em; border-radius:4px; }
+  .badge-active{ color:var(--cyan); background:var(--cyan-soft); border:1px solid rgba(77,216,232,0.3); }
+  .badge-done{ color:var(--text-mute); background:rgba(255,255,255,0.03); border:1px solid var(--border); }
+
+  /* ---------- ARCHITECTURE / SKILLS ---------- */
+  .mod-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:var(--space-4); }
+  .mod-card{ padding:var(--space-4); }
+  .mod-head{ display:flex; align-items:center; gap:.7em; margin-bottom:var(--space-3); }
+  .mod-id{ font-family:var(--font-mono); font-size:.68rem; color:var(--violet); letter-spacing:.08em; }
+  .mod-card h3{ font-size:1.02rem; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:.5em; }
+
+  /* ---------- EXPERIMENTS ---------- */
+  .exp-list{ display:flex; flex-direction:column; gap:var(--space-5); }
+  .exp-card{ display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-5); }
+  .exp-visual{
+    border:1px solid var(--border-soft); border-radius:8px; overflow:hidden;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 26px),
+      var(--bg-2);
+  }
+  .exp-visual svg{ display:block; width:100%; height:auto; }
+  .exp-columns{ display:grid; grid-template-columns:220px 1fr; gap:var(--space-5); }
+  .exp-meta{ display:flex; flex-direction:column; gap:var(--space-3); border-right:1px solid var(--border-soft); padding-right:var(--space-4); }
+  .exp-id{ font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.1em; }
+  .exp-status{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.05em; padding:.35em .6em; border-radius:5px; width:fit-content; }
+  .st-deployed{ color:var(--cyan); background:var(--cyan-soft); border:1px solid rgba(77,216,232,0.3); }
+  .st-research{ color:var(--violet); background:var(--violet-soft); border:1px solid rgba(156,140,255,0.3); }
+  .st-prototype{ color:var(--amber); background:rgba(232,182,77,0.1); border:1px solid rgba(232,182,77,0.3); }
+  .exp-meta a.chip{ transition:border-color .2s ease, color .2s ease; width:fit-content; }
+  .exp-meta a.chip:hover{ border-color:var(--cyan); color:var(--cyan); }
+  .exp-metric{ font-family:var(--font-mono); font-size:.76rem; color:var(--green); }
+  .exp-visual-cap{ padding:.6em var(--space-3); font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; color:var(--text-mute); border-bottom:1px solid var(--border-soft); }
+  .exp-body h3{ margin-bottom:.4em; font-size:1.3rem; }
+  .exp-tagline{ color:var(--text-dim); margin-bottom:var(--space-3); }
+  .exp-body ul{ margin:0 0 var(--space-3); padding-left:1.1em; color:var(--text-dim); }
+  .exp-body li{ margin-bottom:.4em; font-size:.94rem; }
+  .stack-row{ display:flex; flex-wrap:wrap; gap:.5em; margin-top:var(--space-3); }
+
+  /* ---------- RESEARCH LOG ---------- */
+  .log{ position:relative; padding-left:var(--space-6); }
+  .log::before{ content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:linear-gradient(180deg, var(--cyan), var(--border) 90%); }
+  .log-entry{ position:relative; padding-bottom:var(--space-6); }
+  .log-entry:last-child{ padding-bottom:0; }
+  .log-entry::before{ content:""; position:absolute; left:calc(-1 * var(--space-6) + 1px); top:.35em; width:11px; height:11px; border-radius:50%; background:var(--bg); border:2px solid var(--cyan); }
+  .log-time{ font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.06em; margin-bottom:.5em; }
+  .log-entry h3{ margin-bottom:.4em; }
+  .log-entry ul{ padding-left:1.1em; color:var(--text-dim); margin:.6em 0 0; }
+  .log-entry li{ margin-bottom:.3em; font-size:.93rem; }
+  .cert-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--space-3); margin-top:var(--space-3); }
+  .cert-card{ padding:var(--space-3) var(--space-4); font-size:.88rem; color:var(--text-dim); }
+  .cert-card .issuer{ font-family:var(--font-mono); font-size:.7rem; color:var(--violet); margin-top:.4em; display:block; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:var(--space-4); }
+  .contact-tile{ padding:var(--space-4); display:flex; flex-direction:column; gap:.5em; cursor:pointer; text-align:left; font-family:var(--font-body); color:var(--text); }
+  .contact-tile .k{ font-family:var(--font-mono); font-size:.68rem; color:var(--text-mute); letter-spacing:.1em; }
+  .contact-tile .v{ font-size:.98rem; word-break:break-word; }
+  .contact-note{ margin-top:var(--space-5); color:var(--text-dim); font-size:.95rem; max-width:60ch; }
+
+  /* ---------- BOOT SCREEN ---------- */
+  #boot-screen{
+    position:fixed; inset:0; z-index:9999; background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #boot-screen.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+  html.booting, html.booting body{ overflow:hidden; }
+  .boot-inner{ width:min(480px,84vw); }
+  .boot-lines{
+    font-family:var(--font-mono); font-size:.82rem; line-height:1.9; color:var(--cyan);
+    min-height:8.6em; white-space:pre-wrap; word-break:break-word;
+  }
+  .boot-bar-row{ display:flex; align-items:center; gap:var(--space-3); margin-top:var(--space-4); }
+  .boot-bar{ flex:1; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .boot-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--violet)); transition:width 2.6s linear; }
+  .boot-percent{ font-family:var(--font-mono); font-size:.76rem; color:var(--text-mute); width:3.4em; text-align:right; font-variant-numeric:tabular-nums; }
+  .boot-skip{
+    position:absolute; bottom:var(--space-5); right:var(--space-5);
+    background:none; border:1px solid var(--border); color:var(--text-mute);
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em;
+    padding:.55em 1.1em; border-radius:4px; cursor:pointer;
+  }
+  .boot-skip:hover{ color:var(--cyan); border-color:var(--cyan); }
+
+  footer{ border-top:1px solid var(--border-soft); padding:var(--space-5) 0; }
+  .footer-inner{ display:flex; justify-content:space-between; align-items:center; gap:var(--space-3); flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.05em; }
+
+  @media (max-width: 860px){
+    .nav-links{ display:none; }
+    .nav-toggle{ display:inline-flex; }
+    .profile-grid{ grid-template-columns:1fr; }
+    .exp-columns{ grid-template-columns:1fr; }
+    .exp-meta{ border-right:none; border-bottom:1px solid var(--border-soft); padding-right:0; padding-bottom:var(--space-3); flex-direction:row; flex-wrap:wrap; align-items:center; }
+    .hero-stats{ grid-template-columns:1fr 1fr; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-photo{ order:-1; }
+    .ai-avatar{ width:170px; height:170px; }
+  }
+  @media (max-width: 480px){
+    .hero-stats{ grid-template-columns:1fr; }
+  }
+</style>
+
+<div id="boot-screen">
+  <div class="boot-inner">
+    <div class="boot-lines mono" id="bootLines"></div>
+    <div class="boot-bar-row">
+      <div class="boot-bar"><div class="boot-bar-fill" id="bootFill"></div></div>
+      <span class="boot-percent" id="bootPercent">0%</span>
+    </div>
+  </div>
+  <button class="boot-skip" id="bootSkip" type="button">SKIP →</button>
+</div>
+<script>
+  (function(){
+    var screen = document.getElementById('boot-screen');
+    if(!screen) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion){ screen.parentNode.removeChild(screen); return; }
+
+    document.documentElement.classList.add('booting');
+    var linesEl = document.getElementById('bootLines');
+    var fill = document.getElementById('bootFill');
+    var pct = document.getElementById('bootPercent');
+    var skipBtn = document.getElementById('bootSkip');
+    var BOOT_DURATION = 2600;
+
+    var script = [
+      'BOOTING AI_SYSTEMS_LAB v2.5.0',
+      'LOADING NEURAL INTERFACE...',
+      'INITIALIZING RESEARCH MODULES...',
+      'VERIFYING IDENTITY: INDRASENA_REDDY_VENNAPOOSA',
+      'SYSTEM STATUS: ACTIVE'
+    ];
+    var lineIndex = 0, charIndex = 0, finished = false;
+
+    function typeNext(){
+      if(finished || lineIndex >= script.length) return;
+      var current = script[lineIndex];
+      var printed = script.slice(0, lineIndex).map(function(l){ return '> ' + l; }).join('\n');
+      linesEl.textContent = (printed ? printed + '\n' : '') + '> ' + current.slice(0, charIndex);
+      if(charIndex <= current.length){
+        charIndex++;
+        setTimeout(typeNext, 14 + Math.random() * 20);
+      } else {
+        lineIndex++; charIndex = 0;
+        setTimeout(typeNext, 110);
+      }
+    }
+    typeNext();
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        fill.style.width = '100%';
+      });
+    });
+    var pctStart = null;
+    function tickPercent(ts){
+      if(finished) return;
+      if(pctStart === null) pctStart = ts;
+      var p = Math.min(100, Math.round((ts - pctStart) / BOOT_DURATION * 100));
+      pct.textContent = p + '%';
+      if(p < 100) requestAnimationFrame(tickPercent);
+    }
+    requestAnimationFrame(tickPercent);
+
+    function finishBoot(){
+      if(finished) return;
+      finished = true;
+      screen.classList.add('hidden');
+      document.documentElement.classList.remove('booting');
+      setTimeout(function(){ if(screen.parentNode) screen.parentNode.removeChild(screen); }, 650);
+    }
+    setTimeout(finishBoot, BOOT_DURATION + 350);
+    skipBtn.addEventListener('click', finishBoot);
+  })();
+</script>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <circle cx="5" cy="6" r="2.4" stroke="#4dd8e8" stroke-width="1.4"/>
+        <circle cx="19" cy="6" r="2.4" stroke="#9c8cff" stroke-width="1.4"/>
+        <circle cx="12" cy="19" r="2.4" stroke="#4dd8e8" stroke-width="1.4"/>
+        <path d="M7 7.2L17 7.2M6.5 8L11 17M17.5 8L13 17" stroke="#3d4557" stroke-width="1.1"/>
+      </svg>
+      AI_SYSTEMS_LAB
+    </a>
+    <nav class="nav-links">
+      <a href="#profile">PROFILE</a>
+      <a href="#architecture">ARCHITECTURE</a>
+      <a href="#experiments">EXPERIMENTS</a>
+      <a href="#log">LOG</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+    <span class="status-pill"><span class="status-dot"></span>STATUS: ACTIVE</span>
+    <button class="nav-toggle mono" id="navToggle" aria-label="Toggle navigation">MENU</button>
+  </div>
+  <nav class="nav-links mono" id="mobileNav" style="display:none; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4) var(--space-4);">
+    <a href="#profile">PROFILE</a>
+    <a href="#architecture">ARCHITECTURE</a>
+    <a href="#experiments">EXPERIMENTS</a>
+    <a href="#log">LOG</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="wrap hero-inner">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="eyebrow mono">LAB_01 &middot; IDENTITY_VERIFIED</div>
+          <h1 class="hero-name">INDRASENA REDDY<br><span class="accent">VENNAPOOSA</span></h1>
+          <p class="hero-sub mono">Building Intelligent, Reliable &amp; Secure AI Systems. AI &amp; ML researcher-engineer designing retrieval-augmented systems, agentic pipelines, and language-model applications that reason, retrieve, and act reliably.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary mono" href="#experiments">RUN EXPERIMENTS →</a>
+            <a class="btn mono" href="#contact">INITIATE CONTACT →</a>
+            <a class="btn mono" href="https://github.com/Indra-2004" target="_blank" rel="noopener">GITHUB ↗</a>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <div class="stat-num">03</div>
+              <div class="stat-label">Systems Shipped</div>
+            </div>
+            <div>
+              <div class="stat-num">RAG &middot; AGENTIC AI</div>
+              <div class="stat-label">Research Focus</div>
+            </div>
+            <div>
+              <div class="stat-num">MS AI&amp;ML &middot; '27</div>
+              <div class="stat-label">Christ University</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <div class="ai-avatar">
+            <div class="avatar-glow"></div>
+            <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="orbGrad" cx="50%" cy="42%" r="65%">
+                  <stop offset="0%" stop-color="#22304f"/>
+                  <stop offset="55%" stop-color="#141c30"/>
+                  <stop offset="100%" stop-color="#0a0e16"/>
+                </radialGradient>
+              </defs>
+
+              <circle cx="150" cy="150" r="148" fill="url(#orbGrad)" stroke="#243050" stroke-width="1.5"/>
+              <circle cx="150" cy="150" r="148" fill="none" stroke="#4dd8e8" stroke-width="1" opacity="0.35"/>
+              <circle class="scan-ring" cx="150" cy="150" r="128" fill="none" stroke="#4dd8e8" stroke-width="1.5" stroke-dasharray="5 15" opacity="0.5"/>
+
+              <g stroke="#2a3a5c" stroke-width="1.5" opacity="0.6">
+                <line x1="272" y1="150" x2="286" y2="150"/>
+                <line x1="255.7" y1="211" x2="267.8" y2="218"/>
+                <line x1="211" y1="255.7" x2="218" y2="267.8"/>
+                <line x1="150" y1="272" x2="150" y2="286"/>
+                <line x1="89" y1="255.7" x2="82" y2="267.8"/>
+                <line x1="44.3" y1="211" x2="32.2" y2="218"/>
+                <line x1="28" y1="150" x2="14" y2="150"/>
+                <line x1="44.3" y1="89" x2="32.2" y2="82"/>
+                <line x1="89" y1="44.3" x2="82" y2="32.2"/>
+                <line x1="150" y1="28" x2="150" y2="14"/>
+                <line x1="211" y1="44.3" x2="218" y2="32.2"/>
+                <line x1="255.7" y1="89" x2="267.8" y2="82"/>
+              </g>
+
+              <circle cx="40" cy="80" r="3" fill="#4dd8e8" opacity="0.7"/>
+              <circle cx="260" cy="70" r="3" fill="#9c8cff" opacity="0.6"/>
+              <circle cx="252" cy="230" r="2.5" fill="#4dd8e8" opacity="0.5"/>
+              <circle cx="46" cy="220" r="2.5" fill="#9c8cff" opacity="0.55"/>
+
+              <g class="avatar-figure" transform="translate(150 150) scale(1.15) translate(-150 -150)">
+                <line x1="150" y1="92" x2="150" y2="70" stroke="#9c8cff" stroke-width="3" stroke-linecap="round"/>
+                <circle class="pulse-dot" cx="150" cy="65" r="6" fill="#4dd8e8"/>
+
+                <rect x="110" y="92" width="80" height="66" rx="22" fill="#e9edf5"/>
+                <rect x="124" y="114" width="52" height="18" rx="9" fill="#0a0e16"/>
+                <circle class="pulse-dot" cx="139" cy="123" r="4" fill="#4dd8e8"/>
+                <circle class="pulse-dot" cx="161" cy="123" r="4" fill="#4dd8e8"/>
+
+                <rect x="92" y="158" width="116" height="96" rx="26" fill="#e9edf5"/>
+                <rect x="92" y="158" width="116" height="96" rx="26" fill="none" stroke="#c7cee0" stroke-width="1"/>
+
+                <circle cx="150" cy="198" r="16" fill="#0a0e16" stroke="#4dd8e8" stroke-width="2"/>
+                <circle class="pulse-dot" cx="150" cy="198" r="6" fill="#9c8cff"/>
+
+                <rect x="78" y="176" width="22" height="58" rx="11" fill="#d7dcec"/>
+
+                <path d="M200,190 Q228,168 224,130" stroke="#d7dcec" stroke-width="20" stroke-linecap="round" fill="none"/>
+                <circle cx="224" cy="122" r="15" fill="#e9edf5"/>
+
+                <path d="M244,100 Q252,108 244,118" stroke="#4dd8e8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+                <path d="M252,92 Q264,106 252,124" stroke="#9c8cff" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+              </g>
+            </svg>
+          </div>
+          <div class="photo-tag mono">AI_AGENT // ONLINE &middot; LAB_01</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="profile">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow mono">SYSTEM_001</div>
+          <h2>Researcher Profile</h2>
+        </div>
+        <div class="section-tag mono">// WHO IS RUNNING THIS LAB</div>
+      </div>
+      <div class="profile-grid">
+        <div class="reveal">
+          <p>AI &amp; ML Master's student with strong expertise in Python and hands-on experience building LLM-powered applications, intelligent retrieval systems, and AI-driven automation. My work leans on Retrieval-Augmented Generation, SentenceTransformers, FAISS, LLaMA, and semantic search to turn unstructured information into decisions machines and humans can trust.</p>
+          <p>I'm most interested in Agentic AI, prompt engineering, and workflow automation — systems that combine reasoning, retrieval, and tool use, and hold up outside of a demo.</p>
+        </div>
+        <div class="edu-list reveal">
+          <div class="panel edu-item">
+            <div class="deg">M.S. Artificial Intelligence &amp; Machine Learning</div>
+            <div class="school">Christ University, Bangalore</div>
+            <div class="when"><span>JUN 2025 — MAY 2027</span><span class="badge badge-active">IN PROGRESS</span></div>
+          </div>
+          <div class="panel edu-item">
+            <div class="deg">B.Sc. Computer Science &amp; Mathematics</div>
+            <div class="school">Christ University, Bangalore</div>
+            <div class="when"><span>AUG 2022 — MAY 2025</span><span class="badge badge-done">COMPLETE</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="architecture">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow mono">SYSTEM_002</div>
+          <h2>System Architecture</h2>
+        </div>
+        <div class="section-tag mono">// CORE MODULES &amp; STACK</div>
+      </div>
+      <div class="mod-grid">
+        <div class="panel mod-card reveal">
+          <div class="mod-head"><span class="mod-id mono">MOD_01</span><h3>Core Languages</h3></div>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">Java (OOP)</span><span class="chip">JavaScript</span><span class="chip">SQL</span><span class="chip">Data Structures</span>
+          </div>
+        </div>
+        <div class="panel mod-card reveal">
+          <div class="mod-head"><span class="mod-id mono">MOD_02</span><h3>AI / ML Engine</h3></div>
+          <div class="chip-row">
+            <span class="chip">Machine Learning</span><span class="chip">NLP</span><span class="chip">Neural Networks</span><span class="chip">Scikit-learn</span><span class="chip">Prompt Engineering</span><span class="chip">Data Science</span>
+          </div>
+        </div>
+        <div class="panel mod-card reveal">
+          <div class="mod-head"><span class="mod-id mono">MOD_03</span><h3>LLM &amp; Agentic Layer</h3></div>
+          <div class="chip-row">
+            <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">SentenceTransformers</span><span class="chip">FAISS</span><span class="chip">Semantic Search</span><span class="chip">Hugging Face</span><span class="chip">Groq API</span>
+          </div>
+        </div>
+        <div class="panel mod-card reveal">
+          <div class="mod-head"><span class="mod-id mono">MOD_04</span><h3>Backend &amp; Data</h3></div>
+          <div class="chip-row">
+            <span class="chip">Flask</span><span class="chip">SQLite</span><span class="chip">REST APIs</span><span class="chip">MySQL</span><span class="chip">Data Visualization</span>
+          </div>
+        </div>
+        <div class="panel mod-card reveal">
+          <div class="mod-head"><span class="mod-id mono">MOD_05</span><h3>Tooling</h3></div>
+          <div class="chip-row">
+            <span class="chip">GitHub</span><span class="chip">GitHub Copilot</span><span class="chip">VS Code</span><span class="chip">Figma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="experiments">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow mono">EXP_LOG</div>
+          <h2>Experiments</h2>
+        </div>
+        <div class="section-tag mono">// APPLIED SYSTEMS, END TO END</div>
+      </div>
+      <div class="exp-list">
+
+        <div class="panel exp-card reveal">
+          <div class="exp-visual">
+            <div class="exp-visual-cap">FIG_01 // SEMANTIC MATCHING PIPELINE</div>
+            <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
+              <rect x="50" y="40" width="170" height="140" rx="6" fill="#0f1420" stroke="#1e2738"/>
+              <text x="65" y="60" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">RESUME.PDF</text>
+              <rect x="65" y="76" width="120" height="4" rx="2" fill="#2a3448"/>
+              <rect x="65" y="88" width="95" height="4" rx="2" fill="#2a3448"/>
+              <rect x="65" y="100" width="130" height="4" rx="2" fill="#2a3448"/>
+              <rect x="65" y="112" width="80" height="4" rx="2" fill="#2a3448"/>
+              <rect x="65" y="124" width="110" height="4" rx="2" fill="#2a3448"/>
+              <rect x="65" y="146" width="70" height="18" rx="4" fill="none" stroke="#4dd8e8" stroke-width="1"/>
+              <text x="100" y="158" font-family="IBM Plex Mono, monospace" font-size="8" fill="#4dd8e8" text-anchor="middle">EMBED</text>
+
+              <rect x="540" y="40" width="170" height="140" rx="6" fill="#0f1420" stroke="#1e2738"/>
+              <text x="555" y="60" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">JOB_REQ.JSON</text>
+              <rect x="555" y="76" width="100" height="4" rx="2" fill="#2a3448"/>
+              <rect x="555" y="88" width="130" height="4" rx="2" fill="#2a3448"/>
+              <rect x="555" y="100" width="90" height="4" rx="2" fill="#2a3448"/>
+              <rect x="555" y="112" width="115" height="4" rx="2" fill="#2a3448"/>
+              <rect x="555" y="124" width="75" height="4" rx="2" fill="#2a3448"/>
+              <rect x="620" y="146" width="70" height="18" rx="4" fill="none" stroke="#9c8cff" stroke-width="1"/>
+              <text x="655" y="158" font-family="IBM Plex Mono, monospace" font-size="8" fill="#9c8cff" text-anchor="middle">PARSE</text>
+
+              <line x1="220" y1="85" x2="336" y2="100" stroke="#4dd8e8" stroke-width="1.3" stroke-dasharray="3 4"/>
+              <line x1="220" y1="140" x2="336" y2="122" stroke="#9c8cff" stroke-width="1.3" stroke-dasharray="3 4"/>
+              <line x1="424" y1="100" x2="540" y2="85" stroke="#9c8cff" stroke-width="1.3" stroke-dasharray="3 4"/>
+              <line x1="424" y1="122" x2="540" y2="140" stroke="#4dd8e8" stroke-width="1.3" stroke-dasharray="3 4"/>
+
+              <circle cx="380" cy="110" r="44" fill="#0f1420" stroke="#4dd8e8" stroke-width="1.5"/>
+              <text x="380" y="106" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="700" fill="#4dd8e8" text-anchor="middle">94%</text>
+              <text x="380" y="124" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1" fill="#6d7690" text-anchor="middle">MATCH_SCORE</text>
+
+              <text x="270" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6d7690" text-anchor="middle">MiniLM</text>
+              <text x="490" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6d7690" text-anchor="middle">LLaMA 3</text>
+            </svg>
+          </div>
+          <div class="exp-columns">
+            <div class="exp-meta">
+              <span class="exp-id mono">EXP_001</span>
+              <span class="exp-status st-deployed mono">STATUS: DEPLOYED</span>
+              <span class="exp-metric mono">15min → &lt;5min screening time</span>
+            </div>
+            <div class="exp-body">
+              <h3>ResumeXpert</h3>
+              <p class="exp-tagline">AI-driven resume screening platform that automates candidate-job matching using semantic similarity and LLM reasoning.</p>
+              <ul>
+                <li>Built an embedding pipeline with SentenceTransformers (MiniLM) and cosine similarity for intelligent resume ranking.</li>
+                <li>Integrated LLaMA 3 via Groq API for structured extraction, ATS scoring, and skill-gap analysis through prompt engineering.</li>
+                <li>Developed a Flask backend with SQLite for scalable, real-time resume analysis.</li>
+                <li>Combined retrieval, reasoning, and recommendation modules to support recruiter workflows.</li>
+              </ul>
+              <div class="stack-row">
+                <span class="chip">SentenceTransformers</span><span class="chip">Cosine Similarity</span><span class="chip">LLaMA 3 / Groq API</span><span class="chip">Flask</span><span class="chip">SQLite</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel exp-card reveal">
+          <div class="exp-visual">
+            <div class="exp-visual-cap">FIG_02 // MULTI-SOURCE RETRIEVAL GRAPH</div>
+            <svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#4dd8e8"/>
+                </marker>
+                <marker id="arrowV" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#9c8cff"/>
+                </marker>
+              </defs>
+
+              <rect x="40" y="30" width="150" height="34" rx="6" fill="#0f1420" stroke="#1e2738"/>
+              <text x="115" y="51" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">WIKIPEDIA_API</text>
+              <rect x="40" y="103" width="150" height="34" rx="6" fill="#0f1420" stroke="#1e2738"/>
+              <text x="115" y="124" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">ARXIV_API</text>
+              <rect x="40" y="176" width="150" height="34" rx="6" fill="#0f1420" stroke="#1e2738"/>
+              <text x="115" y="197" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">FAISS_VECTOR_DB</text>
+
+              <line x1="190" y1="47" x2="336" y2="105" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowC)"/>
+              <line x1="190" y1="120" x2="338" y2="120" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowC)"/>
+              <line x1="190" y1="193" x2="336" y2="135" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowC)"/>
+
+              <circle cx="380" cy="120" r="40" fill="#0f1420" stroke="#9c8cff" stroke-width="1.5"/>
+              <text x="380" y="117" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9c8cff" text-anchor="middle">QUERY</text>
+              <text x="380" y="130" font-family="IBM Plex Mono, monospace" font-size="8" fill="#6d7690" text-anchor="middle">ROUTED</text>
+
+              <line x1="420" y1="120" x2="556" y2="120" stroke="#9c8cff" stroke-width="1.3" marker-end="url(#arrowV)"/>
+              <rect x="560" y="100" width="150" height="40" rx="6" fill="#0f1420" stroke="#1e2738"/>
+              <text x="635" y="118" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">GPT-2</text>
+              <text x="635" y="132" font-family="IBM Plex Mono, monospace" font-size="8" fill="#6d7690" text-anchor="middle">GENERATE</text>
+
+              <line x1="710" y1="120" x2="750" y2="120" stroke="#3ddc97" stroke-width="1.3"/>
+              <text x="755" y="124" font-family="IBM Plex Mono, monospace" font-size="9" fill="#3ddc97">ANSWER</text>
+
+              <circle cx="260" cy="76" r="2.5" fill="#4dd8e8"/>
+              <circle cx="262" cy="120" r="2.5" fill="#4dd8e8"/>
+              <circle cx="260" cy="164" r="2.5" fill="#4dd8e8"/>
+            </svg>
+          </div>
+          <div class="exp-columns">
+            <div class="exp-meta">
+              <span class="exp-id mono">EXP_002</span>
+              <span class="exp-status st-research mono">STATUS: RESEARCH</span>
+              <span class="exp-metric mono">Fully local &middot; zero external API</span>
+              <a class="chip" href="https://github.com/Indra-2004/rag-project" target="_blank" rel="noopener">VIEW REPO ↗</a>
+            </div>
+            <div class="exp-body">
+              <h3>Multi-Source RAG QA System</h3>
+              <p class="exp-tagline">A Retrieval-Augmented Generation system answering domain-specific and general queries across multiple live data sources.</p>
+              <ul>
+                <li>Used SentenceTransformers (MiniLM) embeddings with a FAISS vector database for semantic retrieval.</li>
+                <li>Built a multi-source pipeline across Wikipedia API, Arxiv API, and a custom vector retriever with dynamic, intent-based query routing.</li>
+                <li>Integrated a lightweight GPT-2 model for context-aware generation, decoupled from retrieval for modularity.</li>
+                <li>Tuned token limits and context truncation for a cost-efficient, fully local solution.</li>
+              </ul>
+              <div class="stack-row">
+                <span class="chip">FAISS</span><span class="chip">SentenceTransformers</span><span class="chip">Wikipedia API</span><span class="chip">Arxiv API</span><span class="chip">GPT-2</span><span class="chip">Query Routing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel exp-card reveal">
+          <div class="exp-visual">
+            <div class="exp-visual-cap">FIG_03 // INTERFACE FLOW — LOGIN → BROWSE → CHECKOUT</div>
+            <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#4dd8e8"/>
+                </marker>
+              </defs>
+
+              <rect x="30" y="30" width="180" height="160" rx="10" fill="#0f1420" stroke="#1e2738"/>
+              <text x="48" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">LOGIN</text>
+              <rect x="48" y="68" width="144" height="18" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="48" y="94" width="144" height="18" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="48" y="130" width="144" height="26" rx="4" fill="none" stroke="#4dd8e8" stroke-width="1.2"/>
+              <text x="120" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4dd8e8" text-anchor="middle">SIGN_IN</text>
+
+              <line x1="210" y1="110" x2="286" y2="110" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowA)"/>
+
+              <rect x="290" y="30" width="180" height="160" rx="10" fill="#0f1420" stroke="#1e2738"/>
+              <text x="308" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">BROWSE</text>
+              <rect x="308" y="68" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="362" y="68" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="416" y="68" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="308" y="122" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="362" y="122" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="416" y="122" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
+
+              <line x1="470" y1="110" x2="546" y2="110" stroke="#9c8cff" stroke-width="1.3" marker-end="url(#arrowA)"/>
+
+              <rect x="550" y="30" width="180" height="160" rx="10" fill="#0f1420" stroke="#1e2738"/>
+              <text x="568" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">CHECKOUT</text>
+              <rect x="568" y="68" width="144" height="10" rx="2" fill="#151d2c"/>
+              <rect x="568" y="86" width="144" height="10" rx="2" fill="#151d2c"/>
+              <rect x="568" y="104" width="144" height="10" rx="2" fill="#151d2c"/>
+              <rect x="568" y="130" width="144" height="26" rx="4" fill="none" stroke="#9c8cff" stroke-width="1.2"/>
+              <text x="640" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9c8cff" text-anchor="middle">PAY_NOW</text>
+            </svg>
+          </div>
+          <div class="exp-columns">
+            <div class="exp-meta">
+              <span class="exp-id mono">EXP_003</span>
+              <span class="exp-status st-prototype mono">STATUS: PROTOTYPE</span>
+              <span class="exp-metric mono">Login → Checkout, mapped</span>
+            </div>
+            <div class="exp-body">
+              <h3>E-Commerce UX System</h3>
+              <p class="exp-tagline">A full UI/UX prototype for an online shopping platform, designed to simplify discovery and streamline the customer journey.</p>
+              <ul>
+                <li>Designed a multi-frame interface: login, product categories, offers, and feedback, with consistent navigation.</li>
+                <li>Structured workflows for browsing, ratings, and promotional banners across a unified design language.</li>
+                <li>Produced a front-end-ready prototype in Figma, aimed at improving engagement and conversion.</li>
+              </ul>
+              <div class="stack-row">
+                <span class="chip">Figma</span><span class="chip">UI/UX</span><span class="chip">Design Systems</span><span class="chip">Prototyping</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="log">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow mono">RESEARCH_LOG</div>
+          <h2>Activity Log</h2>
+        </div>
+        <div class="section-tag mono">// EXPERIENCE &amp; CREDENTIALS</div>
+      </div>
+
+      <div class="log reveal">
+        <div class="log-entry">
+          <div class="log-time mono">2024 — 2025</div>
+          <h3>LMS Content &amp; Systems Intern</h3>
+          <p style="margin:0;">Supported development of a Learning Management System — organizing lecture video content and generating accurate transcripts to improve accessibility.</p>
+          <ul>
+            <li>Processed 50+ lecture videos and transcribed 100+ hours of content.</li>
+            <li>Ran QA checks for accuracy, consistency, and completeness of educational materials.</li>
+            <li>Structured digital content for smooth, user-friendly course delivery.</li>
+          </ul>
+        </div>
+        <div class="log-entry">
+          <div class="log-time mono">SIGNAL</div>
+          <h3>Beyond the Lab</h3>
+          <p style="margin:0;">Represented Christ University in Kabaddi and Kho-Kho at the South Zone level, with prior school-level Kabaddi, Kho-Kho, and Athletics — the same discipline and teamwork show up in how I ship systems.</p>
+        </div>
+      </div>
+
+      <div class="cert-grid reveal">
+        <div class="panel cert-card">
+          Complete Web &amp; Mobile Designer: UI/UX, Figma + More
+          <span class="issuer mono">UDEMY</span>
+        </div>
+        <div class="panel cert-card">
+          Python for Beginners — Data Structures
+          <span class="issuer mono">COURSERA</span>
+        </div>
+        <div class="panel cert-card">
+          Intermediate Python
+          <span class="issuer mono">DATACAMP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow mono">SYSTEM_003</div>
+          <h2>Initiate Contact</h2>
+        </div>
+        <div class="section-tag mono">// OPEN CHANNELS</div>
+      </div>
+      <div class="contact-grid reveal">
+        <button class="panel contact-tile" data-copy="indrasreddy33@gmail.com">
+          <span class="k mono">EMAIL</span>
+          <span class="v">indrasreddy33@gmail.com</span>
+        </button>
+        <button class="panel contact-tile" data-copy="+91 93922 02726">
+          <span class="k mono">PHONE</span>
+          <span class="v">+91 93922 02726</span>
+        </button>
+        <a class="panel contact-tile" href="https://www.linkedin.com/in/vennapoosaindrasenareddy/" target="_blank" rel="noopener">
+          <span class="k mono">LINKEDIN</span>
+          <span class="v">/in/vennapoosaindrasenareddy ↗</span>
+        </a>
+        <a class="panel contact-tile" href="https://github.com/Indra-2004" target="_blank" rel="noopener">
+          <span class="k mono">GITHUB</span>
+          <span class="v">/Indra-2004 ↗</span>
+        </a>
+      </div>
+      <p class="contact-note">Currently pursuing my M.S. in AI &amp; ML and open to research assistantships, internships, and full-time roles in applied AI, LLM systems, and machine learning engineering.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>AI_SYSTEMS_LAB // INDRASENA REDDY VENNAPOOSA</span>
+    <span>BUILD: 2026.09 &middot; STATUS: ACTIVE</span>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  document.getElementById('navToggle').addEventListener('click', function(){
+    var m = document.getElementById('mobileNav');
+    m.style.display = (m.style.display === 'none' || !m.style.display) ? 'flex' : 'none';
+  });
+  document.querySelectorAll('#mobileNav a').forEach(function(a){
+    a.addEventListener('click', function(){ document.getElementById('mobileNav').style.display = 'none'; });
+  });
+
+  // copy to clipboard
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var val = btn.getAttribute('data-copy');
+      var valEl = btn.querySelector('.v');
+      var original = valEl.textContent;
+      var done = function(){ valEl.textContent = 'COPIED ✓'; setTimeout(function(){ valEl.textContent = original; }, 1400); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(val).then(done).catch(done);
+      } else { done(); }
+    });
+  });
+
+  // reveal on scroll
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  } else if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // hero neural network canvas
+  (function(){
+    var canvas = document.getElementById('hero-canvas');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w, h, nodes = [];
+    var NODE_COUNT = 46;
+    var LINK_DIST = 130;
+
+    function resize(){
+      var hero = canvas.parentElement;
+      w = hero.clientWidth; h = hero.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+
+    function initNodes(){
+      nodes = [];
+      for(var i=0;i<NODE_COUNT;i++){
+        nodes.push({
+          x: Math.random()*w, y: Math.random()*h,
+          vx: (Math.random()-0.5)*0.18, vy: (Math.random()-0.5)*0.18,
+          r: Math.random()*1.6 + 0.6
+        });
+      }
+    }
+
+    function step(){
+      ctx.clearRect(0,0,w,h);
+      for(var i=0;i<nodes.length;i++){
+        var n = nodes[i];
+        n.x += n.vx; n.y += n.vy;
+        if(n.x < 0 || n.x > w) n.vx *= -1;
+        if(n.y < 0 || n.y > h) n.vy *= -1;
+      }
+      for(var i=0;i<nodes.length;i++){
+        for(var j=i+1;j<nodes.length;j++){
+          var a = nodes[i], b = nodes[j];
+          var dx = a.x-b.x, dy = a.y-b.y;
+          var dist = Math.sqrt(dx*dx+dy*dy);
+          if(dist < LINK_DIST){
+            var op = (1 - dist/LINK_DIST) * 0.35;
+            ctx.strokeStyle = j % 2 === 0 ? 'rgba(77,216,232,' + op + ')' : 'rgba(156,140,255,' + op + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+      }
+      for(var i=0;i<nodes.length;i++){
+        var n = nodes[i];
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(233,237,245,0.55)';
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      if(!reduceMotion) raf = requestAnimationFrame(step);
+    }
+
+    var raf;
+    resize(); initNodes();
+    if(!reduceMotion){ raf = requestAnimationFrame(step); } else { step(); }
+    window.addEventListener('resize', function(){ resize(); initNodes(); });
+  })();
+</script>
