@@ -152,6 +152,9 @@
   .hero-name{ font-size:var(--fs-hero); max-width:14ch; line-height:1.06; }
   .hero-name .accent{ background:linear-gradient(100deg, var(--cyan), var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .hero-sub{ max-width:50ch; font-size:.98rem; line-height:1.7; margin:var(--space-4) 0 var(--space-5); color:var(--text-dim); }
+  .hero-pitch{ font-size:1.12rem; font-weight:600; line-height:1.5; color:var(--text); margin:var(--space-4) 0 var(--space-3); max-width:52ch; }
+  .hero-open{ display:inline-flex; align-items:center; gap:.6em; font-size:.74rem; letter-spacing:.06em; color:var(--green); border:1px solid rgba(61,220,151,0.35); background:rgba(61,220,151,0.06); padding:.5em .9em; border-radius:999px; }
+  .hero-pitch + .hero-open + .hero-sub{ margin-top:var(--space-4); }
   .hero-ctas{ display:flex; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-6); }
   .hero-stats{ display:grid; grid-template-columns:repeat(3,minmax(140px,1fr)); gap:var(--space-4); max-width:640px; border-top:1px solid var(--border-soft); padding-top:var(--space-4); }
   .stat-num{ font-family:var(--font-mono); font-size:1rem; color:var(--cyan); font-variant-numeric:tabular-nums; }
@@ -401,6 +404,8 @@
         <div class="hero-text">
           <div class="eyebrow mono">LAB_01 &middot; IDENTITY_VERIFIED</div>
           <h1 class="hero-name">INDRASENA REDDY<br><span class="accent">VENNAPOOSA</span></h1>
+          <p class="hero-pitch">MSc AI &amp; ML student at Christ University &middot; Building LLM, RAG &amp; agentic AI systems</p>
+          <div class="hero-open mono"><span class="status-dot"></span>OPEN TO: GenAI Engineer Internship &middot; Available Immediately</div>
           <p class="hero-sub mono">Building Intelligent, Reliable &amp; Secure AI Systems. AI &amp; ML researcher-engineer designing retrieval-augmented systems, agentic pipelines, and language-model applications that reason, retrieve, and act reliably.</p>
           <div class="hero-ctas">
             <a class="btn btn-primary mono" href="#experiments">RUN EXPERIMENTS →</a>
