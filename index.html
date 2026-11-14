@@ -1,4 +1,10 @@
-<title>AI Systems Lab</title>
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Indrasena Reddy Vennapoosa — GenAI engineer building LLM, RAG and agentic AI systems.">
+<meta name="theme-color" content="#11100e">
+<title>Indrasena Reddy · AI Systems Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -275,7 +281,74 @@
   footer{ border-top:1px solid var(--border-soft); padding:var(--space-5) 0; }
   .footer-inner{ display:flex; justify-content:space-between; align-items:center; gap:var(--space-3); flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.05em; }
 
+  /* ================= LIVE LAYER ================= */
+  :root{ --accent-3:#ff4f8b; --mx:50vw; --my:30vh; }
+  #hero-canvas{ opacity:.9; }
+
+  /* drifting aurora behind everything */
+  .aurora{ position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
+  .aurora span{ position:absolute; width:48vmax; height:48vmax; border-radius:50%; filter:blur(90px); opacity:.2; animation:drift 26s ease-in-out infinite alternate; will-change:transform; }
+  .aurora .a1{ background:var(--accent); top:-16vmax; left:-12vmax; }
+  .aurora .a2{ background:var(--accent-3); top:28vh; right:-18vmax; opacity:.14; animation-duration:32s; animation-delay:-9s; }
+  .aurora .a3{ background:var(--accent-2); bottom:-24vmax; left:28vw; opacity:.12; animation-duration:38s; animation-delay:-17s; }
+  @keyframes drift{ 0%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(9vw,7vh) scale(1.18); } 100%{ transform:translate(-7vw,11vh) scale(.94); } }
+
+  /* soft light that follows the cursor */
+  .spotlight{ position:fixed; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(520px circle at var(--mx) var(--my), rgba(255,120,73,0.09), transparent 62%); transition:opacity .4s ease; }
+
+  /* scroll progress */
+  .scroll-progress{ position:fixed; top:0; left:0; right:0; height:3px; z-index:60; transform-origin:0 50%; transform:scaleX(0); background:linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2)); pointer-events:none; }
+
+  /* flowing gradients */
+  .hero-name .accent{ background:linear-gradient(100deg, var(--accent), var(--accent-3), var(--accent-2), var(--accent)); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:flow 9s linear infinite; }
+  @keyframes flow{ to{ background-position:300% 0; } }
+  h2::after{ width:0; background:linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2)); transition:width .9s cubic-bezier(.2,.8,.2,1) .2s; }
+  .section-head.in h2::after{ width:64px; }
+  .btn-primary{ background:linear-gradient(120deg, rgba(255,120,73,.22), rgba(255,79,139,.18), rgba(242,193,78,.2)); background-size:200% 100%; animation:flow 6s ease-in-out infinite alternate; }
+
+  /* typing line */
+  .hero-typer{ font-size:.9rem; color:var(--text-mute); margin:var(--space-4) 0 0; min-height:1.6em; }
+  .hero-typer .typed{ color:var(--accent-2); }
+  .caret{ display:inline-block; width:.55em; height:1.05em; margin-left:2px; vertical-align:-.15em; background:var(--accent); animation:blink 1s steps(1) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .hero-typer + .hero-sub{ margin-top:var(--space-3); }
+
+  /* cards: light follows the pointer + tilt */
+  .panel{ background:radial-gradient(380px circle at var(--px,50%) var(--py,-40%), rgba(255,120,73,.13), transparent 45%), linear-gradient(180deg, var(--surface), var(--surface-2)); }
+  .panel.tilting{ transition:transform .12s ease-out, border-color .3s ease, box-shadow .3s ease; }
+
+  /* chips pop in one by one */
+  .reveal .chip{ opacity:0; transform:translateY(8px) scale(.94); transition:opacity .45s ease, transform .45s cubic-bezier(.2,.9,.3,1.3), border-color .2s ease, color .2s ease; }
+  .reveal.in .chip{ opacity:1; transform:none; }
+  .chip:hover{ border-color:var(--accent); color:var(--text); }
+
+  /* tech marquee */
+  .marquee{ position:relative; overflow:hidden; border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); padding:var(--space-3) 0; background:rgba(26,24,20,.55); -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee-track{ display:flex; width:max-content; animation:marquee 38s linear infinite; }
+  .marquee:hover .marquee-track{ animation-play-state:paused; }
+  .marquee-track span{ font-family:var(--font-display); font-size:clamp(1rem, 1.4vw + .6rem, 1.5rem); font-weight:600; padding:0 1.1em; white-space:nowrap; color:var(--text-mute); transition:color .2s ease; }
+  .marquee-track span:nth-child(4n+1){ color:var(--accent); }
+  .marquee-track span:nth-child(4n+3){ color:var(--accent-2); }
+  .marquee-track span::after{ content:"✦"; margin-left:2.2em; font-size:.6em; vertical-align:.3em; color:var(--accent-3); }
+  @keyframes marquee{ to{ transform:translateX(-50%); } }
+
+  /* live feed card */
+  .live-card{ width:min(320px, 100%); margin-top:var(--space-4); padding:var(--space-3) var(--space-4); font-family:var(--font-mono); font-size:.74rem; color:var(--text-dim); }
+  .live-head{ display:flex; justify-content:space-between; align-items:center; color:var(--text-mute); letter-spacing:.12em; font-size:.66rem; margin-bottom:.7em; }
+  .live-badge{ display:inline-flex; align-items:center; gap:.45em; color:var(--accent-3); }
+  .live-badge i{ width:7px; height:7px; border-radius:50%; background:var(--accent-3); box-shadow:0 0 0 0 rgba(255,79,139,.6); animation:ping 1.8s ease-out infinite; }
+  @keyframes ping{ 0%{ box-shadow:0 0 0 0 rgba(255,79,139,.6); } 100%{ box-shadow:0 0 0 9px rgba(255,79,139,0); } }
+  .live-row{ display:flex; gap:.7em; padding:.35em 0; border-top:1px dashed var(--border); }
+  .live-row:first-of-type{ border-top:none; }
+  .live-row .k{ color:var(--text-mute); min-width:6.2em; }
+  .live-row .v{ color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .live-row .v a{ color:var(--accent); }
+  .live-row .v a:hover{ text-decoration:underline; }
+  .flash{ animation:flash .8s ease; }
+  @keyframes flash{ 0%{ color:var(--accent-2); } 100%{ color:var(--text); } }
+
   @media (max-width: 860px){
+    .live-card{ display:none; }
     .nav-links{ display:none; }
     .nav-toggle{ display:inline-flex; }
     .profile-grid{ grid-template-columns:1fr; }
@@ -366,6 +439,10 @@
   })();
 </script>
 
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+<div class="spotlight" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
@@ -384,7 +461,7 @@
       <a href="#log">LOG</a>
       <a href="#contact">CONTACT</a>
     </nav>
-    <span class="status-pill"><span class="status-dot"></span>STATUS: ACTIVE</span>
+    <span class="status-pill"><span class="status-dot"></span>ONLINE &middot; <span id="navClock">IST</span></span>
     <button class="nav-toggle mono" id="navToggle" aria-label="Toggle navigation">MENU</button>
   </div>
   <nav class="nav-links mono" id="mobileNav" style="display:none; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4) var(--space-4);">
@@ -406,6 +483,7 @@
           <h1 class="hero-name">INDRASENA REDDY<br><span class="accent">VENNAPOOSA</span></h1>
           <p class="hero-pitch">MSc AI &amp; ML student at Christ University &middot; Building LLM, RAG &amp; agentic AI systems</p>
           <div class="hero-open mono"><span class="status-dot"></span>OPEN TO: GenAI Engineer Internship &middot; Available Immediately</div>
+          <p class="hero-typer mono" aria-label="Currently building RAG pipelines, AI agents, semantic search and LLM apps">&gt; currently_building: <span class="typed" id="typed">RAG pipelines</span><span class="caret"></span></p>
           <p class="hero-sub mono">Building Intelligent, Reliable &amp; Secure AI Systems. AI &amp; ML researcher-engineer designing retrieval-augmented systems, agentic pipelines, and language-model applications that reason, retrieve, and act reliably.</p>
           <div class="hero-ctas">
             <a class="btn btn-primary mono" href="#experiments">RUN EXPERIMENTS →</a>
@@ -414,7 +492,7 @@
           </div>
           <div class="hero-stats">
             <div>
-              <div class="stat-num">03</div>
+              <div class="stat-num" data-count="3">03</div>
               <div class="stat-label">Systems Shipped</div>
             </div>
             <div>
@@ -489,10 +567,24 @@
             </svg>
           </div>
           <div class="photo-tag mono">AI_AGENT // ONLINE &middot; LAB_01</div>
+          <div class="panel live-card" id="liveCard">
+            <div class="live-head"><span>LIVE_FEED</span><span class="live-badge"><i></i>LIVE</span></div>
+            <div class="live-row"><span class="k">local_time</span><span class="v" id="liveClock">--:--:-- IST</span></div>
+            <div class="live-row"><span class="k">last_push</span><span class="v" id="liveCommit"><a href="https://github.com/Indra-2004" target="_blank" rel="noopener">github.com/Indra-2004</a></span></div>
+            <div class="live-row"><span class="k">public_repos</span><span class="v" id="liveRepos">—</span></div>
+            <div class="live-row"><span class="k">visitor_since</span><span class="v" id="liveTimer">00:00</span></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <div class="marquee" aria-label="Tech stack">
+    <div class="marquee-track">
+      <span>Python</span><span>LangChain</span><span>LangGraph</span><span>RAG</span><span>FAISS</span><span>AI Agents</span><span>Prompt Engineering</span><span>Embeddings</span><span>TensorFlow</span><span>Scikit-learn</span><span>Flask</span><span>FastAPI</span><span>Docker</span><span>AWS</span><span>n8n</span><span>SHAP</span>
+      <span aria-hidden="true">Python</span><span aria-hidden="true">LangChain</span><span aria-hidden="true">LangGraph</span><span aria-hidden="true">RAG</span><span aria-hidden="true">FAISS</span><span aria-hidden="true">AI Agents</span><span aria-hidden="true">Prompt Engineering</span><span aria-hidden="true">Embeddings</span><span aria-hidden="true">TensorFlow</span><span aria-hidden="true">Scikit-learn</span><span aria-hidden="true">Flask</span><span aria-hidden="true">FastAPI</span><span aria-hidden="true">Docker</span><span aria-hidden="true">AWS</span><span aria-hidden="true">n8n</span><span aria-hidden="true">SHAP</span>
+    </div>
+  </div>
 
   <section class="section" id="profile">
     <div class="wrap">
@@ -931,10 +1023,37 @@
       }
     }
 
+    // cursor position inside the hero (null when outside)
+    var mouse = null, MOUSE_DIST = 170;
+    var COLORS = ['255,120,73', '242,193,78', '255,79,139'];
+    // "signals" that travel along links, like data moving through the network
+    var pulses = [];
+
+    canvas.parentElement.addEventListener('pointermove', function(e){
+      var r = canvas.getBoundingClientRect();
+      mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+    });
+    canvas.parentElement.addEventListener('pointerleave', function(){ mouse = null; });
+
+    function spawnPulse(){
+      var a = nodes[(Math.random()*nodes.length)|0], best = null, bd = LINK_DIST;
+      for(var k=0;k<nodes.length;k++){
+        var b = nodes[k]; if(b === a) continue;
+        var d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d < bd){ bd = d; best = b; }
+      }
+      if(best) pulses.push({ a:a, b:best, t:0, c:COLORS[(Math.random()*3)|0], s:0.012 + Math.random()*0.014 });
+    }
+
     function step(){
       ctx.clearRect(0,0,w,h);
       for(var i=0;i<nodes.length;i++){
         var n = nodes[i];
+        if(mouse){
+          // nodes near the cursor are gently pulled toward it
+          var mx = mouse.x - n.x, my = mouse.y - n.y, md = Math.hypot(mx, my);
+          if(md < MOUSE_DIST && md > 1){ n.x += mx/md * 0.35; n.y += my/md * 0.35; }
+        }
         n.x += n.vx; n.y += n.vy;
         if(n.x < 0 || n.x > w) n.vx *= -1;
         if(n.y < 0 || n.y > h) n.vy *= -1;
@@ -945,26 +1064,177 @@
           var dx = a.x-b.x, dy = a.y-b.y;
           var dist = Math.sqrt(dx*dx+dy*dy);
           if(dist < LINK_DIST){
-            var op = (1 - dist/LINK_DIST) * 0.35;
-            ctx.strokeStyle = j % 2 === 0 ? 'rgba(255,120,73,' + op + ')' : 'rgba(242,193,78,' + op + ')';
+            var op = (1 - dist/LINK_DIST) * 0.4;
+            ctx.strokeStyle = 'rgba(' + COLORS[(i+j)%3] + ',' + op + ')';
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+        if(mouse){
+          var n = nodes[i], d = Math.hypot(mouse.x-n.x, mouse.y-n.y);
+          if(d < MOUSE_DIST){
+            ctx.strokeStyle = 'rgba(255,79,139,' + (1 - d/MOUSE_DIST) * 0.7 + ')';
+            ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke();
           }
         }
       }
       for(var i=0;i<nodes.length;i++){
         var n = nodes[i];
         ctx.beginPath();
-        ctx.fillStyle = 'rgba(242,235,221,0.55)';
+        ctx.fillStyle = 'rgba(242,235,221,0.6)';
         ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
         ctx.fill();
       }
-      if(!reduceMotion) raf = requestAnimationFrame(step);
+      if(Math.random() < 0.08 && pulses.length < 14) spawnPulse();
+      for(var p=pulses.length-1;p>=0;p--){
+        var s = pulses[p]; s.t += s.s;
+        if(s.t >= 1){ pulses.splice(p,1); continue; }
+        var px = s.a.x + (s.b.x - s.a.x)*s.t, py = s.a.y + (s.b.y - s.a.y)*s.t;
+        var g = ctx.createRadialGradient(px,py,0,px,py,7);
+        g.addColorStop(0,'rgba(' + s.c + ',0.95)'); g.addColorStop(1,'rgba(' + s.c + ',0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px,py,7,0,Math.PI*2); ctx.fill();
+      }
+      if(!reduceMotion && running) raf = requestAnimationFrame(step);
     }
 
-    var raf;
-    resize(); initNodes();
+    var raf, running = true;
+    resize();
+    NODE_COUNT = Math.round(Math.min(90, Math.max(36, w * h / 16000)));
+    initNodes();
     if(!reduceMotion){ raf = requestAnimationFrame(step); } else { step(); }
     window.addEventListener('resize', function(){ resize(); initNodes(); });
+    // stop drawing while the hero is scrolled out of view
+    if('IntersectionObserver' in window && !reduceMotion){
+      new IntersectionObserver(function(es){
+        var vis = es[0].isIntersecting;
+        if(vis && !running){ running = true; raf = requestAnimationFrame(step); }
+        else if(!vis){ running = false; cancelAnimationFrame(raf); }
+      }).observe(canvas.parentElement);
+    }
+  })();
+
+  // ================= LIVE LAYER =================
+  (function(){
+    var root = document.documentElement;
+    var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // scroll progress bar
+    var bar = document.getElementById('scrollProgress');
+    function onScroll(){
+      var max = root.scrollHeight - innerHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
+    }
+    addEventListener('scroll', onScroll, { passive:true }); onScroll();
+
+    if(finePointer && !reduceMotion){
+      // background spotlight follows the cursor
+      addEventListener('pointermove', function(e){
+        root.style.setProperty('--mx', e.clientX + 'px');
+        root.style.setProperty('--my', e.clientY + 'px');
+      }, { passive:true });
+
+      // card glow follows the pointer; small cards also tilt in 3D
+      document.querySelectorAll('.panel').forEach(function(card){
+        var tilt = !card.classList.contains('exp-card') && !card.classList.contains('live-card');
+        card.addEventListener('pointermove', function(e){
+          var r = card.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--px', (x*100) + '%');
+          card.style.setProperty('--py', (y*100) + '%');
+          if(tilt){
+            card.classList.add('tilting');
+            card.style.transform = 'perspective(800px) rotateX(' + ((0.5 - y) * 7) + 'deg) rotateY(' + ((x - 0.5) * 9) + 'deg) translateY(-3px)';
+          }
+        });
+        card.addEventListener('pointerleave', function(){
+          card.classList.remove('tilting');
+          card.style.transform = '';
+          card.style.setProperty('--py', '-40%');
+        });
+      });
+    }
+
+    // stagger chip pop-in inside each card
+    document.querySelectorAll('.reveal').forEach(function(block){
+      block.querySelectorAll('.chip').forEach(function(chip, i){ chip.style.transitionDelay = (0.15 + i * 0.04) + 's'; });
+    });
+
+    // typing line: cycles through what I build
+    var typed = document.getElementById('typed');
+    var words = ['RAG pipelines', 'AI agents with LangGraph', 'semantic search engines', 'LLM-powered apps', 'prompt frameworks', 'workflow automations'];
+    if(typed && !reduceMotion){
+      var wi = 0, ci = words[0].length, deleting = true;
+      (function tick(){
+        var word = words[wi];
+        ci += deleting ? -1 : 1;
+        typed.textContent = word.slice(0, ci);
+        var delay = deleting ? 35 : 75;
+        if(!deleting && ci === word.length){ deleting = true; delay = 1800; }
+        else if(deleting && ci === 0){ deleting = false; wi = (wi + 1) % words.length; delay = 300; }
+        setTimeout(tick, delay);
+      })();
+    }
+
+    // count-up numbers
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var target = +el.getAttribute('data-count');
+      if(reduceMotion) return;
+      var start = null;
+      setTimeout(function(){
+        requestAnimationFrame(function run(ts){
+          if(start === null) start = ts;
+          var p = Math.min(1, (ts - start) / 1400), v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          el.textContent = (v < 10 ? '0' : '') + v;
+          if(p < 1) requestAnimationFrame(run);
+        });
+      }, 3200);
+    });
+
+    // live clock (India time) + how long this visitor has been here
+    var navClock = document.getElementById('navClock'), liveClock = document.getElementById('liveClock'), liveTimer = document.getElementById('liveTimer');
+    var fmt = function(opts){ try { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone:'Asia/Kolkata', hour12:false }, opts)); } catch(e){ return null; } };
+    var fShort = fmt({ hour:'2-digit', minute:'2-digit' }), fLong = fmt({ hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    var t0 = Date.now();
+    function clock(){
+      var now = new Date();
+      if(fShort) navClock.textContent = fShort.format(now) + ' IST';
+      if(fLong) liveClock.textContent = fLong.format(now) + ' IST';
+      var s = Math.floor((Date.now() - t0) / 1000);
+      liveTimer.textContent = String(Math.floor(s / 60)).padStart(2,'0') + ':' + String(s % 60).padStart(2,'0');
+    }
+    clock(); setInterval(clock, 1000);
+
+    // live GitHub activity (public API, cached for 10 min to stay under rate limits)
+    var USER = 'Indra-2004';
+    function ago(iso){
+      var s = (Date.now() - new Date(iso)) / 1000;
+      if(s < 60) return 'just now';
+      if(s < 3600) return Math.floor(s/60) + 'm ago';
+      if(s < 86400) return Math.floor(s/3600) + 'h ago';
+      return Math.floor(s/86400) + 'd ago';
+    }
+    function cached(key, url){
+      try {
+        var c = JSON.parse(sessionStorage.getItem(key) || 'null');
+        if(c && Date.now() - c.t < 600000) return Promise.resolve(c.d);
+      } catch(e){}
+      return fetch(url, { headers:{ 'Accept':'application/vnd.github+json' } })
+        .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function(d){ try { sessionStorage.setItem(key, JSON.stringify({ t:Date.now(), d:d })); } catch(e){} return d; });
+    }
+    function show(el, html){ el.innerHTML = html; el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+    var commitEl = document.getElementById('liveCommit'), reposEl = document.getElementById('liveRepos');
+    function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+    function loadGitHub(){
+      cached('gh_pushed', 'https://api.github.com/users/' + USER + '/repos?sort=pushed&per_page=1').then(function(list){
+        var repo = (list || [])[0];
+        if(!repo || !repo.pushed_at) return;
+        show(commitEl, '<a href="' + esc(repo.html_url) + '" target="_blank" rel="noopener">' + esc(repo.name) + '</a> · ' + ago(repo.pushed_at));
+      }).catch(function(){});
+      cached('gh_user', 'https://api.github.com/users/' + USER).then(function(u){
+        if(u && typeof u.public_repos === 'number') show(reposEl, u.public_repos + ' repositories');
+      }).catch(function(){});
+    }
+    loadGitHub(); setInterval(loadGitHub, 600000);
   })();
 </script>
