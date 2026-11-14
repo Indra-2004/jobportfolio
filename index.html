@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Indrasena Reddy Vennapoosa — GenAI engineer building LLM, RAG and agentic AI systems.">
+<meta name="description" content="Indrasena Reddy Vennapoosa — AI/ML engineer building LLM, RAG and agentic AI systems.">
 <meta name="theme-color" content="#11100e">
 <title>Indrasena Reddy · AI Systems Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -252,6 +252,7 @@
   .contact-tile .k{ font-family:var(--font-mono); font-size:.68rem; color:var(--text-mute); letter-spacing:.1em; }
   .contact-tile .v{ font-size:.98rem; word-break:break-word; }
   .contact-note{ margin-top:var(--space-5); color:var(--text-dim); font-size:.95rem; max-width:60ch; }
+  .contact-note strong{ color:var(--text); }
 
   /* ---------- BOOT SCREEN ---------- */
   #boot-screen{
@@ -455,20 +456,20 @@
       AI_SYSTEMS_LAB
     </a>
     <nav class="nav-links">
-      <a href="#profile">PROFILE</a>
-      <a href="#architecture">ARCHITECTURE</a>
-      <a href="#experiments">EXPERIMENTS</a>
-      <a href="#log">LOG</a>
+      <a href="#profile">ABOUT</a>
+      <a href="#architecture">SKILLS</a>
+      <a href="#experiments">PROJECTS</a>
+      <a href="#log">EXPERIENCE</a>
       <a href="#contact">CONTACT</a>
     </nav>
-    <span class="status-pill"><span class="status-dot"></span>ONLINE &middot; <span id="navClock">IST</span></span>
+    <span class="status-pill"><span class="status-dot"></span>OPEN TO WORK</span>
     <button class="nav-toggle mono" id="navToggle" aria-label="Toggle navigation">MENU</button>
   </div>
   <nav class="nav-links mono" id="mobileNav" style="display:none; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4) var(--space-4);">
-    <a href="#profile">PROFILE</a>
-    <a href="#architecture">ARCHITECTURE</a>
-    <a href="#experiments">EXPERIMENTS</a>
-    <a href="#log">LOG</a>
+    <a href="#profile">ABOUT</a>
+    <a href="#architecture">SKILLS</a>
+    <a href="#experiments">PROJECTS</a>
+    <a href="#log">EXPERIENCE</a>
     <a href="#contact">CONTACT</a>
   </nav>
 </header>
@@ -482,18 +483,19 @@
           <div class="eyebrow mono">LAB_01 &middot; IDENTITY_VERIFIED</div>
           <h1 class="hero-name">INDRASENA REDDY<br><span class="accent">VENNAPOOSA</span></h1>
           <p class="hero-pitch">MSc AI &amp; ML student at Christ University &middot; Building LLM, RAG &amp; agentic AI systems</p>
-          <div class="hero-open mono"><span class="status-dot"></span>OPEN TO: GenAI Engineer Internship &middot; Available Immediately</div>
+          <div class="hero-open mono"><span class="status-dot"></span>OPEN TO: AI/ML Engineer &amp; GenAI roles &middot; Available Immediately</div>
           <p class="hero-typer mono" aria-label="Currently building RAG pipelines, AI agents, semantic search and LLM apps">&gt; currently_building: <span class="typed" id="typed">RAG pipelines</span><span class="caret"></span></p>
           <p class="hero-sub mono">Building Intelligent, Reliable &amp; Secure AI Systems. AI &amp; ML researcher-engineer designing retrieval-augmented systems, agentic pipelines, and language-model applications that reason, retrieve, and act reliably.</p>
           <div class="hero-ctas">
-            <a class="btn btn-primary mono" href="#experiments">RUN EXPERIMENTS →</a>
-            <a class="btn mono" href="#contact">INITIATE CONTACT →</a>
+            <a class="btn btn-primary mono" href="#experiments">VIEW PROJECTS →</a>
+            <a class="btn mono" href="Indrasena_Reddy_Vennapoosa_Resume.pdf" target="_blank" rel="noopener">RESUME (PDF) ↓</a>
+            <a class="btn mono" href="#contact">CONTACT →</a>
             <a class="btn mono" href="https://github.com/Indra-2004" target="_blank" rel="noopener">GITHUB ↗</a>
           </div>
           <div class="hero-stats">
             <div>
-              <div class="stat-num" data-count="3">03</div>
-              <div class="stat-label">Systems Shipped</div>
+              <div class="stat-num" data-count="2">02</div>
+              <div class="stat-label">AI Systems Built</div>
             </div>
             <div>
               <div class="stat-num">RAG &middot; AGENTIC AI</div>
@@ -571,7 +573,7 @@
             <div class="live-head"><span>LIVE_FEED</span><span class="live-badge"><i></i>LIVE</span></div>
             <div class="live-row"><span class="k">local_time</span><span class="v" id="liveClock">--:--:-- IST</span></div>
             <div class="live-row"><span class="k">last_push</span><span class="v" id="liveCommit"><a href="https://github.com/Indra-2004" target="_blank" rel="noopener">github.com/Indra-2004</a></span></div>
-            <div class="live-row"><span class="k">public_repos</span><span class="v" id="liveRepos">—</span></div>
+            <div class="live-row" id="liveReposRow" hidden><span class="k">public_repos</span><span class="v" id="liveRepos"></span></div>
             <div class="live-row"><span class="k">visitor_since</span><span class="v" id="liveTimer">00:00</span></div>
           </div>
         </div>
@@ -591,20 +593,20 @@
       <div class="section-head reveal">
         <div>
           <div class="eyebrow mono">SYSTEM_001</div>
-          <h2>Researcher Profile</h2>
+          <h2>About</h2>
         </div>
         <div class="section-tag mono">// WHO IS RUNNING THIS LAB</div>
       </div>
       <div class="profile-grid">
         <div class="reveal">
-          <p>AI &amp; ML Master's student with strong expertise in Python and hands-on experience building LLM-powered applications, intelligent retrieval systems, and AI-driven automation. My work leans on Retrieval-Augmented Generation, SentenceTransformers, FAISS, LLaMA, and semantic search to turn unstructured information into decisions machines and humans can trust.</p>
+          <p>AI &amp; ML Master's student, strong in Python, with hands-on experience building LLM-powered applications, intelligent retrieval systems, and AI-driven automation. My work leans on Retrieval-Augmented Generation, SentenceTransformers, FAISS, LLaMA, and semantic search to turn unstructured information into decisions machines and humans can trust.</p>
           <p>I'm most interested in Agentic AI, prompt engineering, and workflow automation — systems that combine reasoning, retrieval, and tool use, and hold up outside of a demo.</p>
         </div>
         <div class="edu-list reveal">
           <div class="panel edu-item">
             <div class="deg">M.S. Artificial Intelligence &amp; Machine Learning</div>
             <div class="school">Christ University, Bangalore</div>
-            <div class="when"><span>JUN 2025 — MAY 2027</span><span class="badge badge-active">IN PROGRESS</span></div>
+            <div class="when"><span>MAY 2025 — MAY 2027</span><span class="badge badge-active">IN PROGRESS</span></div>
           </div>
           <div class="panel edu-item">
             <div class="deg">B.Sc. Computer Science &amp; Mathematics</div>
@@ -621,7 +623,7 @@
       <div class="section-head reveal">
         <div>
           <div class="eyebrow mono">SYSTEM_002</div>
-          <h2>System Architecture</h2>
+          <h2>Skills</h2>
         </div>
         <div class="section-tag mono">// CORE MODULES &amp; STACK</div>
       </div>
@@ -671,7 +673,7 @@
       <div class="section-head reveal">
         <div>
           <div class="eyebrow mono">EXP_LOG</div>
-          <h2>Experiments</h2>
+          <h2>Projects</h2>
         </div>
         <div class="section-tag mono">// APPLIED SYSTEMS, END TO END</div>
       </div>
@@ -707,8 +709,8 @@
               <line x1="424" y1="122" x2="540" y2="140" stroke="#ff7849" stroke-width="1.3" stroke-dasharray="3 4"/>
 
               <circle cx="380" cy="110" r="44" fill="#1a1814" stroke="#ff7849" stroke-width="1.5"/>
-              <text x="380" y="106" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="700" fill="#ff7849" text-anchor="middle">94%</text>
-              <text x="380" y="124" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1" fill="#8a8170" text-anchor="middle">MATCH_SCORE</text>
+              <text x="380" y="106" font-family="IBM Plex Mono, monospace" font-size="15" font-weight="700" fill="#ff7849" text-anchor="middle">e.g. 94%</text>
+              <text x="380" y="124" font-family="IBM Plex Mono, monospace" font-size="8" letter-spacing="1" fill="#8a8170" text-anchor="middle">SAMPLE SCORE</text>
 
               <text x="270" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#8a8170" text-anchor="middle">MiniLM</text>
               <text x="490" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#8a8170" text-anchor="middle">LLaMA 3</text>
@@ -717,7 +719,7 @@
           <div class="exp-columns">
             <div class="exp-meta">
               <span class="exp-id mono">EXP_001</span>
-              <span class="exp-status st-deployed mono">STATUS: DEPLOYED</span>
+              <span class="exp-status st-deployed mono">MAR 2026 &middot; COMPLETED</span>
               <span class="exp-metric mono">15min → &lt;5min screening time</span>
             </div>
             <div class="exp-body">
@@ -780,8 +782,8 @@
           <div class="exp-columns">
             <div class="exp-meta">
               <span class="exp-id mono">EXP_002</span>
-              <span class="exp-status st-research mono">STATUS: RESEARCH</span>
-              <span class="exp-metric mono">Fully local &middot; zero external API</span>
+              <span class="exp-status st-research mono">APR 2026 &middot; COMPLETED</span>
+              <span class="exp-metric mono">3 sources &middot; intent-based routing</span>
               <a class="chip" href="https://github.com/Indra-2004/rag-project" target="_blank" rel="noopener">VIEW REPO ↗</a>
             </div>
             <div class="exp-body">
@@ -791,7 +793,7 @@
                 <li>Used SentenceTransformers (MiniLM) embeddings with a FAISS vector database for semantic retrieval.</li>
                 <li>Built a multi-source pipeline across Wikipedia API, Arxiv API, and a custom vector retriever with dynamic, intent-based query routing.</li>
                 <li>Integrated a lightweight GPT-2 model for context-aware generation, decoupled from retrieval for modularity.</li>
-                <li>Tuned token limits and context truncation for a cost-efficient, fully local solution.</li>
+                <li>Tuned token limits and context truncation so generation runs locally, with no paid LLM API.</li>
               </ul>
               <div class="stack-row">
                 <span class="chip">FAISS</span><span class="chip">SentenceTransformers</span><span class="chip">Wikipedia API</span><span class="chip">Arxiv API</span><span class="chip">GPT-2</span><span class="chip">Query Routing</span>
@@ -800,65 +802,6 @@
           </div>
         </div>
 
-        <div class="panel exp-card reveal">
-          <div class="exp-visual">
-            <div class="exp-visual-cap">FIG_03 // INTERFACE FLOW — LOGIN → BROWSE → CHECKOUT</div>
-            <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <marker id="arrowA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M0,0 L10,5 L0,10 z" fill="#ff7849"/>
-                </marker>
-              </defs>
-
-              <rect x="30" y="30" width="180" height="160" rx="10" fill="#1a1814" stroke="#2e2a23"/>
-              <text x="48" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">LOGIN</text>
-              <rect x="48" y="68" width="144" height="18" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-              <rect x="48" y="94" width="144" height="18" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-              <rect x="48" y="130" width="144" height="26" rx="4" fill="none" stroke="#ff7849" stroke-width="1.2"/>
-              <text x="120" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#ff7849" text-anchor="middle">SIGN_IN</text>
-
-              <line x1="210" y1="110" x2="286" y2="110" stroke="#ff7849" stroke-width="1.3" marker-end="url(#arrowA)"/>
-
-              <rect x="290" y="30" width="180" height="160" rx="10" fill="#1a1814" stroke="#2e2a23"/>
-              <text x="308" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">BROWSE</text>
-              <rect x="308" y="68" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-              <rect x="362" y="68" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-              <rect x="416" y="68" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-              <rect x="308" y="122" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-              <rect x="362" y="122" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-              <rect x="416" y="122" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
-
-              <line x1="470" y1="110" x2="546" y2="110" stroke="#f2c14e" stroke-width="1.3" marker-end="url(#arrowA)"/>
-
-              <rect x="550" y="30" width="180" height="160" rx="10" fill="#1a1814" stroke="#2e2a23"/>
-              <text x="568" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">CHECKOUT</text>
-              <rect x="568" y="68" width="144" height="10" rx="2" fill="#1c1a16"/>
-              <rect x="568" y="86" width="144" height="10" rx="2" fill="#1c1a16"/>
-              <rect x="568" y="104" width="144" height="10" rx="2" fill="#1c1a16"/>
-              <rect x="568" y="130" width="144" height="26" rx="4" fill="none" stroke="#f2c14e" stroke-width="1.2"/>
-              <text x="640" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#f2c14e" text-anchor="middle">PAY_NOW</text>
-            </svg>
-          </div>
-          <div class="exp-columns">
-            <div class="exp-meta">
-              <span class="exp-id mono">EXP_003</span>
-              <span class="exp-status st-prototype mono">STATUS: PROTOTYPE</span>
-              <span class="exp-metric mono">Login → Checkout, mapped</span>
-            </div>
-            <div class="exp-body">
-              <h3>E-Commerce UX System</h3>
-              <p class="exp-tagline">A full UI/UX prototype for an online shopping platform, designed to simplify discovery and streamline the customer journey.</p>
-              <ul>
-                <li>Designed a multi-frame interface: login, product categories, offers, and feedback, with consistent navigation.</li>
-                <li>Structured workflows for browsing, ratings, and promotional banners across a unified design language.</li>
-                <li>Produced a front-end-ready prototype in Figma, aimed at improving engagement and conversion.</li>
-              </ul>
-              <div class="stack-row">
-                <span class="chip">Figma</span><span class="chip">UI/UX</span><span class="chip">Design Systems</span><span class="chip">Prototyping</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>
@@ -869,7 +812,7 @@
       <div class="section-head reveal">
         <div>
           <div class="eyebrow mono">RESEARCH_LOG</div>
-          <h2>Activity Log</h2>
+          <h2>Experience</h2>
         </div>
         <div class="section-tag mono">// EXPERIENCE &amp; CREDENTIALS</div>
       </div>
@@ -924,7 +867,7 @@
       <div class="section-head reveal">
         <div>
           <div class="eyebrow mono">SYSTEM_003</div>
-          <h2>Initiate Contact</h2>
+          <h2>Contact</h2>
         </div>
         <div class="section-tag mono">// OPEN CHANNELS</div>
       </div>
@@ -946,7 +889,7 @@
           <span class="v">/Indra-2004 ↗</span>
         </a>
       </div>
-      <p class="contact-note">Currently pursuing my M.S. in AI &amp; ML and open to research assistantships, internships, and full-time roles in applied AI, LLM systems, and machine learning engineering.</p>
+      <p class="contact-note">Looking for <strong>AI/ML Engineer and GenAI Engineer roles</strong> and available to start immediately, while completing my M.S. (May 2027). The fastest way to reach me is email or LinkedIn. You can also <a href="Indrasena_Reddy_Vennapoosa_Resume.pdf" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">download my resume (PDF)</a>.</p>
     </div>
   </section>
 </main>
@@ -954,7 +897,7 @@
 <footer>
   <div class="wrap footer-inner">
     <span>AI_SYSTEMS_LAB // INDRASENA REDDY VENNAPOOSA</span>
-    <span>BUILD: 2026.09 &middot; STATUS: ACTIVE</span>
+    <span>UPDATED: NOV 2026 &middot; STATUS: ACTIVE</span>
   </div>
 </footer>
 
@@ -1191,13 +1134,12 @@
     });
 
     // live clock (India time) + how long this visitor has been here
-    var navClock = document.getElementById('navClock'), liveClock = document.getElementById('liveClock'), liveTimer = document.getElementById('liveTimer');
+    var liveClock = document.getElementById('liveClock'), liveTimer = document.getElementById('liveTimer');
     var fmt = function(opts){ try { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone:'Asia/Kolkata', hour12:false }, opts)); } catch(e){ return null; } };
-    var fShort = fmt({ hour:'2-digit', minute:'2-digit' }), fLong = fmt({ hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    var fLong = fmt({ hour:'2-digit', minute:'2-digit', second:'2-digit' });
     var t0 = Date.now();
     function clock(){
       var now = new Date();
-      if(fShort) navClock.textContent = fShort.format(now) + ' IST';
       if(fLong) liveClock.textContent = fLong.format(now) + ' IST';
       var s = Math.floor((Date.now() - t0) / 1000);
       liveTimer.textContent = String(Math.floor(s / 60)).padStart(2,'0') + ':' + String(s % 60).padStart(2,'0');
@@ -1232,7 +1174,7 @@
         show(commitEl, '<a href="' + esc(repo.html_url) + '" target="_blank" rel="noopener">' + esc(repo.name) + '</a> · ' + ago(repo.pushed_at));
       }).catch(function(){});
       cached('gh_user', 'https://api.github.com/users/' + USER).then(function(u){
-        if(u && typeof u.public_repos === 'number') show(reposEl, u.public_repos + ' repositories');
+        if(u && typeof u.public_repos === 'number'){ document.getElementById('liveReposRow').hidden = false; show(reposEl, u.public_repos + ' repositories'); }
       }).catch(function(){});
     }
     loadGitHub(); setInterval(loadGitHub, 600000);
