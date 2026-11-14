@@ -399,33 +399,6 @@
   @media (max-width: 480px){
     .hero-stats{ grid-template-columns:1fr; }
   }
-  /* github contribution heatmap */
-  .gh-panel{ --c:11px; --g:3px; padding:var(--space-4); }
-  .gh-top{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:var(--space-3); margin-bottom:var(--space-4); }
-  .gh-total{ font-family:var(--font-display); font-size:clamp(1.5rem,2vw + .8rem,2.1rem); color:var(--text); line-height:1; }
-  .gh-total small{ display:block; margin-top:.45rem; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.12em; color:var(--text-mute); }
-  .gh-stats{ display:flex; flex-wrap:wrap; gap:.6rem; }
-  .gh-stat{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.06em; color:var(--text-dim); border:1px solid var(--border); background:var(--surface-2); border-radius:8px; padding:.45rem .7rem; }
-  .gh-stat b{ color:var(--accent-2); font-weight:500; }
-  .gh-scroll{ overflow-x:auto; padding-bottom:.4rem; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
-  .gh-chart{ display:inline-grid; grid-template-columns:auto 1fr; column-gap:8px; min-width:max-content; }
-  .gh-months{ grid-column:2; display:grid; grid-template-columns:repeat(var(--w), calc(var(--c) + var(--g))); height:16px; font-family:var(--font-mono); font-size:.62rem; color:var(--text-mute); }
-  .gh-months span{ white-space:nowrap; }
-  .gh-days{ display:grid; grid-template-rows:repeat(7, var(--c)); row-gap:var(--g); font-family:var(--font-mono); font-size:.58rem; color:var(--text-mute); line-height:var(--c); }
-  .gh-grid{ display:grid; grid-auto-flow:column; grid-template-rows:repeat(7, var(--c)); grid-auto-columns:var(--c); gap:var(--g); }
-  .gh-cell{ width:var(--c); height:var(--c); border-radius:3px; background:var(--surface-2); outline:1px solid rgba(255,255,255,.03); outline-offset:-1px; }
-  .gh-cell.l1{ background:rgba(255,120,73,.28); } .gh-cell.l2{ background:rgba(255,120,73,.5); }
-  .gh-cell.l3{ background:rgba(255,120,73,.78); } .gh-cell.l4{ background:var(--accent); box-shadow:0 0 8px rgba(255,120,73,.45); }
-  .gh-cell.pad{ visibility:hidden; }
-  .gh-chart.anim .gh-cell{ animation:ghIn .5s ease both; animation-delay:calc(var(--i) * 14ms); }
-  @keyframes ghIn{ from{ opacity:0; transform:scale(.3); } to{ opacity:1; transform:none; } }
-  .gh-foot{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:var(--space-3); margin-top:var(--space-3); font-family:var(--font-mono); font-size:.7rem; color:var(--text-mute); }
-  .gh-legend{ display:flex; align-items:center; gap:4px; }
-  .gh-legend .gh-cell{ display:inline-block; }
-  .gh-tip{ min-height:1.1em; color:var(--text-dim); }
-  @media (max-width:560px){ .gh-panel{ padding:var(--space-3); } .gh-stats{ gap:.4rem; } .gh-stat{ font-size:.66rem; padding:.35rem .55rem; } }
-  .gh-msg{ font-family:var(--font-mono); font-size:.8rem; color:var(--text-mute); padding:var(--space-4) 0; }
-  .gh-msg a{ color:var(--accent); }
 </style>
 
 <div id="boot-screen" role="status" aria-label="Loading portfolio">
@@ -1073,30 +1046,6 @@
     </div>
   </section>
 
-  <section class="section" id="activity">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <div class="eyebrow mono">COMMIT_LOG</div>
-          <h2>GitHub Activity</h2>
-        </div>
-        <div class="section-tag mono">// LIVE FROM GITHUB, LAST 12 MONTHS</div>
-      </div>
-      <div class="panel gh-panel reveal" id="ghPanel">
-        <div class="gh-top">
-          <div class="gh-total" id="ghTotal">—<small>CONTRIBUTIONS IN THE LAST YEAR</small></div>
-          <div class="gh-stats" id="ghStats"></div>
-        </div>
-        <div class="gh-scroll" id="ghScroll"><div class="gh-msg">Loading activity…</div></div>
-        <div class="gh-foot">
-          <span class="gh-tip" id="ghTip">Hover or tap a square for details</span>
-          <span class="gh-legend">Less <i class="gh-cell"></i><i class="gh-cell l1"></i><i class="gh-cell l2"></i><i class="gh-cell l3"></i><i class="gh-cell l4"></i> More</span>
-          <a class="chip" href="https://github.com/Indra-2004" target="_blank" rel="noopener">VIEW ON GITHUB ↗</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="log">
     <div class="wrap">
       <div class="section-head reveal">
@@ -1468,72 +1417,5 @@
       }).catch(function(){});
     }
     loadGitHub(); setInterval(loadGitHub, 600000);
-  })();
-</script>
-<script>
-  // GitHub contribution heatmap
-  (function(){
-    var USER = 'Indra-2004', KEY = 'gh_contrib';
-    var scroller = document.getElementById('ghScroll'), panel = document.getElementById('ghPanel');
-    if(!scroller) return;
-    var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function parse(s){ var p = s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
-    function fmt(d){ return MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); }
-    function load(){
-      try {
-        var c = JSON.parse(sessionStorage.getItem(KEY) || 'null');
-        if(c && Date.now() - c.t < 3600000) return Promise.resolve(c.d);
-      } catch(e){}
-      return fetch('https://github-contributions-api.jogruber.de/v4/' + USER + '?y=last')
-        .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-        .then(function(d){ try { sessionStorage.setItem(KEY, JSON.stringify({ t:Date.now(), d:d })); } catch(e){} return d; });
-    }
-    function render(d){
-      var days = (d && d.contributions) || [];
-      if(!days.length) throw new Error('empty');
-      var total = 0, active = 0, longest = 0, run = 0;
-      days.forEach(function(x){ total += x.count; if(x.count > 0){ active++; run++; if(run > longest) longest = run; } else run = 0; });
-      var current = 0, i = days.length - 1;
-      if(days[i].count === 0) i--;
-      for(; i >= 0 && days[i].count > 0; i--) current++;
-
-      var lead = parse(days[0].date).getDay();
-      var weeks = Math.ceil((lead + days.length) / 7);
-      var cells = '', months = '', lastCol = -3;
-      for(var p = 0; p < lead; p++) cells += '<i class="gh-cell pad"></i>';
-      days.forEach(function(x, k){
-        var dt = parse(x.date), col = Math.floor((lead + k) / 7);
-        if(dt.getDate() === 1 && col - lastCol >= 3){ months += '<span style="grid-column:' + (col + 1) + '">' + MONTHS[dt.getMonth()] + '</span>'; lastCol = col; }
-        var label = (x.count === 0 ? 'No' : x.count) + ' contribution' + (x.count === 1 ? '' : 's') + ' on ' + fmt(dt);
-        cells += '<i class="gh-cell' + (x.level ? ' l' + x.level : '') + '" style="--i:' + col + '" data-tip="' + label + '" aria-label="' + label + '"></i>';
-      });
-      scroller.innerHTML =
-        '<div class="gh-chart" style="--w:' + weeks + '" role="img" aria-label="' + total + ' GitHub contributions in the last year">' +
-          '<div class="gh-months">' + months + '</div>' +
-          '<div class="gh-days"><span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span></div>' +
-          '<div class="gh-grid">' + cells + '</div>' +
-        '</div>';
-      document.getElementById('ghTotal').innerHTML = total.toLocaleString() + '<small>CONTRIBUTIONS IN THE LAST YEAR</small>';
-      document.getElementById('ghStats').innerHTML =
-        '<span class="gh-stat">active_days: <b>' + active + '</b></span>' +
-        '<span class="gh-stat">longest_streak: <b>' + longest + 'd</b></span>' +
-        '<span class="gh-stat">current_streak: <b>' + current + 'd</b></span>';
-      scroller.scrollLeft = scroller.scrollWidth;
-
-      var chart = scroller.querySelector('.gh-chart'), tip = document.getElementById('ghTip');
-      chart.addEventListener('mouseover', function(e){ var t = e.target.getAttribute('data-tip'); if(t) tip.textContent = t; });
-      chart.addEventListener('click', function(e){ var t = e.target.getAttribute('data-tip'); if(t) tip.textContent = t; });
-      if(!reduce && 'IntersectionObserver' in window){
-        chart.style.visibility = 'hidden';
-        var io = new IntersectionObserver(function(en){
-          if(en[0].isIntersecting){ chart.style.visibility = ''; chart.classList.add('anim'); io.disconnect(); }
-        }, { threshold:.25 });
-        io.observe(chart);
-      }
-    }
-    load().then(render).catch(function(){
-      scroller.innerHTML = '<div class="gh-msg">Couldn\'t load the activity graph right now. <a href="https://github.com/' + USER + '" target="_blank" rel="noopener">See it on GitHub ↗</a></div>';
-    });
   })();
 </script>
