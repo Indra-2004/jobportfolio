@@ -4,21 +4,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #090c12;
-    --bg-2: #0c1119;
-    --surface: #0f1420;
-    --surface-2: #131a28;
-    --border: #1e2738;
-    --border-soft: #171f2e;
-    --text: #e9edf5;
-    --text-dim: #aab2c5;
-    --text-mute: #6d7690;
-    --cyan: #4dd8e8;
-    --cyan-soft: rgba(77,216,232,0.12);
-    --violet: #9c8cff;
-    --violet-soft: rgba(156,140,255,0.12);
-    --green: #3ddc97;
-    --amber: #e8b64d;
+    --bg: #11100e;
+    --bg-2: #15130f;
+    --surface: #1a1814;
+    --surface-2: #1f1c17;
+    --border: #2e2a23;
+    --border-soft: #231f1a;
+    --text: #f2ebdd;
+    --text-dim: #c4baa6;
+    --text-mute: #8a8170;
+    --accent: #ff7849;
+    --accent-soft: rgba(255,120,73,0.12);
+    --accent-2: #f2c14e;
+    --accent-2-soft: rgba(242,193,78,0.12);
+    --green: #a8d672;
+    --amber: #e88aa0;
 
     --font-display: "Unbounded", "Segoe UI", sans-serif;
     --font-body: "Manrope", "Segoe UI", sans-serif;
@@ -41,7 +41,7 @@
   body{
     margin:0;
     background:
-      linear-gradient(180deg, transparent 0%, rgba(77,216,232,0.03) 40%, transparent 70%),
+      linear-gradient(180deg, transparent 0%, rgba(255,120,73,0.03) 40%, transparent 70%),
       repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px),
       repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px),
       var(--bg);
@@ -52,11 +52,11 @@
     -webkit-font-smoothing:antialiased;
   }
 
-  ::selection{ background:var(--cyan); color:#04131a; }
+  ::selection{ background:var(--accent); color:#1a0d06; }
   ::-webkit-scrollbar{ width:10px; }
   ::-webkit-scrollbar-track{ background:var(--bg); }
   ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:6px; }
-  :focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:2px; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
 
   a{ color:inherit; text-decoration:none; }
   p{ color:var(--text-dim); }
@@ -67,18 +67,18 @@
   .eyebrow{
     display:inline-flex; align-items:center; gap:.6em;
     font-family:var(--font-mono); font-size:.78rem; letter-spacing:.14em;
-    text-transform:uppercase; color:var(--cyan);
+    text-transform:uppercase; color:var(--accent);
     margin:0 0 var(--space-3);
   }
   .eyebrow::before{
     content:""; width:7px; height:7px; border-radius:2px;
-    background:var(--cyan); box-shadow:0 0 8px var(--cyan);
+    background:var(--accent); box-shadow:0 0 8px var(--accent);
     flex:none;
   }
 
   h1,h2,h3{ font-family:var(--font-display); font-weight:600; line-height:1.15; letter-spacing:-.01em; text-wrap:balance; margin:0; color:var(--text); }
   h2{ font-size:var(--fs-h2); font-weight:600; position:relative; padding-bottom:var(--space-3); }
-  h2::after{ content:""; position:absolute; left:0; bottom:0; width:44px; height:3px; border-radius:3px; background:linear-gradient(90deg, var(--cyan), var(--violet)); }
+  h2::after{ content:""; position:absolute; left:0; bottom:0; width:44px; height:3px; border-radius:3px; background:linear-gradient(90deg, var(--accent), var(--accent-2)); }
   h3{ font-size:var(--fs-h3); font-weight:600; }
 
   .section{ padding:var(--space-7) 0; border-top:1px solid var(--border-soft); position:relative; }
@@ -98,8 +98,8 @@
     transition:border-color .2s ease, transform .2s ease, background .2s ease;
     background:var(--surface);
   }
-  .btn-primary{ background:linear-gradient(135deg, var(--cyan-soft), var(--violet-soft)); border-color:rgba(77,216,232,0.4); color:var(--text); }
-  .btn:hover{ border-color:var(--cyan); transform:translateY(-2px); }
+  .btn-primary{ background:linear-gradient(135deg, var(--accent-soft), var(--accent-2-soft)); border-color:rgba(255,120,73,0.4); color:var(--text); }
+  .btn:hover{ border-color:var(--accent); transform:translateY(-2px); }
 
   /* reveal-on-scroll */
   .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
@@ -108,7 +108,7 @@
   /* ---------- NAV ---------- */
   header.nav{
     position:sticky; top:0; z-index:50;
-    background:rgba(9,12,18,0.78); backdrop-filter:blur(14px);
+    background:rgba(17,16,14,0.78); backdrop-filter:blur(14px);
     border-bottom:1px solid var(--border-soft);
   }
   .nav-inner{ display:flex; align-items:center; justify-content:space-between; padding:var(--space-3) var(--space-4); max-width:var(--maxw); margin:0 auto; }
@@ -116,11 +116,11 @@
   .brand svg{ display:block; }
   .nav-links{ display:flex; gap:var(--space-5); font-family:var(--font-mono); font-size:.78rem; letter-spacing:.05em; }
   .nav-links a{ color:var(--text-mute); transition:color .2s ease; }
-  .nav-links a:hover{ color:var(--cyan); }
+  .nav-links a:hover{ color:var(--accent); }
   .status-pill{
     display:inline-flex; align-items:center; gap:.55em;
     font-family:var(--font-mono); font-size:.72rem; letter-spacing:.06em;
-    color:var(--green); border:1px solid rgba(61,220,151,0.35); background:rgba(61,220,151,0.06);
+    color:var(--green); border:1px solid rgba(168,214,114,0.35); background:rgba(168,214,114,0.06);
     padding:.4em .8em; border-radius:100px;
   }
   .status-dot{ width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2.2s ease-in-out infinite; }
@@ -136,7 +136,7 @@
   .ai-avatar{ position:relative; width:220px; height:220px; }
   .avatar-glow{
     position:absolute; inset:-22px; border-radius:50%;
-    background:radial-gradient(circle, rgba(77,216,232,0.22), rgba(156,140,255,0.13) 55%, transparent 75%);
+    background:radial-gradient(circle, rgba(255,120,73,0.22), rgba(242,193,78,0.13) 55%, transparent 75%);
     filter:blur(24px); pointer-events:none; z-index:-1;
     animation:glow-breathe 5s ease-in-out infinite;
   }
@@ -150,14 +150,14 @@
   @keyframes scan-rotate{ to{ transform:rotate(360deg); } }
   .photo-tag{ font-size:.68rem; letter-spacing:.1em; color:var(--text-mute); position:relative; z-index:1; }
   .hero-name{ font-size:var(--fs-hero); max-width:14ch; line-height:1.06; }
-  .hero-name .accent{ background:linear-gradient(100deg, var(--cyan), var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-name .accent{ background:linear-gradient(100deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .hero-sub{ max-width:50ch; font-size:.98rem; line-height:1.7; margin:var(--space-4) 0 var(--space-5); color:var(--text-dim); }
   .hero-pitch{ font-size:1.12rem; font-weight:600; line-height:1.5; color:var(--text); margin:var(--space-4) 0 var(--space-3); max-width:52ch; }
-  .hero-open{ display:inline-flex; align-items:center; gap:.6em; font-size:.74rem; letter-spacing:.06em; color:var(--green); border:1px solid rgba(61,220,151,0.35); background:rgba(61,220,151,0.06); padding:.5em .9em; border-radius:999px; }
+  .hero-open{ display:inline-flex; align-items:center; gap:.6em; font-size:.74rem; letter-spacing:.06em; color:var(--green); border:1px solid rgba(168,214,114,0.35); background:rgba(168,214,114,0.06); padding:.5em .9em; border-radius:999px; }
   .hero-pitch + .hero-open + .hero-sub{ margin-top:var(--space-4); }
   .hero-ctas{ display:flex; gap:var(--space-3); flex-wrap:wrap; margin-bottom:var(--space-6); }
   .hero-stats{ display:grid; grid-template-columns:repeat(3,minmax(140px,1fr)); gap:var(--space-4); max-width:640px; border-top:1px solid var(--border-soft); padding-top:var(--space-4); }
-  .stat-num{ font-family:var(--font-mono); font-size:1rem; color:var(--cyan); font-variant-numeric:tabular-nums; }
+  .stat-num{ font-family:var(--font-mono); font-size:1rem; color:var(--accent); font-variant-numeric:tabular-nums; }
   .stat-label{ font-family:var(--font-mono); font-size:.68rem; color:var(--text-mute); letter-spacing:.08em; text-transform:uppercase; margin-top:.3em; }
 
   /* ---------- CARD FRAME (lab bracket corners) ---------- */
@@ -168,15 +168,15 @@
   }
   .mod-card:hover, .exp-card:hover, .cert-card:hover, .edu-item:hover{
     transform:translateY(-3px);
-    border-color:rgba(77,216,232,0.4);
-    box-shadow:0 14px 34px -18px rgba(77,216,232,0.35);
+    border-color:rgba(255,120,73,0.4);
+    box-shadow:0 14px 34px -18px rgba(255,120,73,0.35);
   }
   .panel::before, .panel::after{
     content:""; position:absolute; width:14px; height:14px; pointer-events:none;
-    border-color:var(--cyan); opacity:.55;
+    border-color:var(--accent); opacity:.55;
   }
-  .panel::before{ top:-1px; left:-1px; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); border-top-left-radius:6px; }
-  .panel::after{ bottom:-1px; right:-1px; border-bottom:2px solid var(--violet); border-right:2px solid var(--violet); border-bottom-right-radius:6px; }
+  .panel::before{ top:-1px; left:-1px; border-top:2px solid var(--accent); border-left:2px solid var(--accent); border-top-left-radius:6px; }
+  .panel::after{ bottom:-1px; right:-1px; border-bottom:2px solid var(--accent-2); border-right:2px solid var(--accent-2); border-bottom-right-radius:6px; }
 
   /* ---------- PROFILE ---------- */
   .profile-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:var(--space-6); align-items:start; }
@@ -187,14 +187,14 @@
   .edu-item .school{ color:var(--text-dim); font-size:.92rem; }
   .edu-item .when{ font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); margin-top:.5em; display:flex; justify-content:space-between; align-items:center; }
   .badge{ font-family:var(--font-mono); font-size:.65rem; letter-spacing:.06em; padding:.25em .55em; border-radius:4px; }
-  .badge-active{ color:var(--cyan); background:var(--cyan-soft); border:1px solid rgba(77,216,232,0.3); }
+  .badge-active{ color:var(--accent); background:var(--accent-soft); border:1px solid rgba(255,120,73,0.3); }
   .badge-done{ color:var(--text-mute); background:rgba(255,255,255,0.03); border:1px solid var(--border); }
 
   /* ---------- ARCHITECTURE / SKILLS ---------- */
   .mod-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:var(--space-4); }
   .mod-card{ padding:var(--space-4); }
   .mod-head{ display:flex; align-items:center; gap:.7em; margin-bottom:var(--space-3); }
-  .mod-id{ font-family:var(--font-mono); font-size:.68rem; color:var(--violet); letter-spacing:.08em; }
+  .mod-id{ font-family:var(--font-mono); font-size:.68rem; color:var(--accent-2); letter-spacing:.08em; }
   .mod-card h3{ font-size:1.02rem; }
   .chip-row{ display:flex; flex-wrap:wrap; gap:.5em; }
 
@@ -213,11 +213,11 @@
   .exp-meta{ display:flex; flex-direction:column; gap:var(--space-3); border-right:1px solid var(--border-soft); padding-right:var(--space-4); }
   .exp-id{ font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.1em; }
   .exp-status{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.05em; padding:.35em .6em; border-radius:5px; width:fit-content; }
-  .st-deployed{ color:var(--cyan); background:var(--cyan-soft); border:1px solid rgba(77,216,232,0.3); }
-  .st-research{ color:var(--violet); background:var(--violet-soft); border:1px solid rgba(156,140,255,0.3); }
-  .st-prototype{ color:var(--amber); background:rgba(232,182,77,0.1); border:1px solid rgba(232,182,77,0.3); }
+  .st-deployed{ color:var(--accent); background:var(--accent-soft); border:1px solid rgba(255,120,73,0.3); }
+  .st-research{ color:var(--accent-2); background:var(--accent-2-soft); border:1px solid rgba(242,193,78,0.3); }
+  .st-prototype{ color:var(--amber); background:rgba(232,138,160,0.1); border:1px solid rgba(232,138,160,0.3); }
   .exp-meta a.chip{ transition:border-color .2s ease, color .2s ease; width:fit-content; }
-  .exp-meta a.chip:hover{ border-color:var(--cyan); color:var(--cyan); }
+  .exp-meta a.chip:hover{ border-color:var(--accent); color:var(--accent); }
   .exp-metric{ font-family:var(--font-mono); font-size:.76rem; color:var(--green); }
   .exp-visual-cap{ padding:.6em var(--space-3); font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; color:var(--text-mute); border-bottom:1px solid var(--border-soft); }
   .exp-body h3{ margin-bottom:.4em; font-size:1.3rem; }
@@ -228,17 +228,17 @@
 
   /* ---------- RESEARCH LOG ---------- */
   .log{ position:relative; padding-left:var(--space-6); }
-  .log::before{ content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:linear-gradient(180deg, var(--cyan), var(--border) 90%); }
+  .log::before{ content:""; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:linear-gradient(180deg, var(--accent), var(--border) 90%); }
   .log-entry{ position:relative; padding-bottom:var(--space-6); }
   .log-entry:last-child{ padding-bottom:0; }
-  .log-entry::before{ content:""; position:absolute; left:calc(-1 * var(--space-6) + 1px); top:.35em; width:11px; height:11px; border-radius:50%; background:var(--bg); border:2px solid var(--cyan); }
+  .log-entry::before{ content:""; position:absolute; left:calc(-1 * var(--space-6) + 1px); top:.35em; width:11px; height:11px; border-radius:50%; background:var(--bg); border:2px solid var(--accent); }
   .log-time{ font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.06em; margin-bottom:.5em; }
   .log-entry h3{ margin-bottom:.4em; }
   .log-entry ul{ padding-left:1.1em; color:var(--text-dim); margin:.6em 0 0; }
   .log-entry li{ margin-bottom:.3em; font-size:.93rem; }
   .cert-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--space-3); margin-top:var(--space-3); }
   .cert-card{ padding:var(--space-3) var(--space-4); font-size:.88rem; color:var(--text-dim); }
-  .cert-card .issuer{ font-family:var(--font-mono); font-size:.7rem; color:var(--violet); margin-top:.4em; display:block; }
+  .cert-card .issuer{ font-family:var(--font-mono); font-size:.7rem; color:var(--accent-2); margin-top:.4em; display:block; }
 
   /* ---------- CONTACT ---------- */
   .contact-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:var(--space-4); }
@@ -257,12 +257,12 @@
   html.booting, html.booting body{ overflow:hidden; }
   .boot-inner{ width:min(480px,84vw); }
   .boot-lines{
-    font-family:var(--font-mono); font-size:.82rem; line-height:1.9; color:var(--cyan);
+    font-family:var(--font-mono); font-size:.82rem; line-height:1.9; color:var(--accent);
     min-height:8.6em; white-space:pre-wrap; word-break:break-word;
   }
   .boot-bar-row{ display:flex; align-items:center; gap:var(--space-3); margin-top:var(--space-4); }
   .boot-bar{ flex:1; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
-  .boot-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--violet)); transition:width 2.6s linear; }
+  .boot-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); transition:width 2.6s linear; }
   .boot-percent{ font-family:var(--font-mono); font-size:.76rem; color:var(--text-mute); width:3.4em; text-align:right; font-variant-numeric:tabular-nums; }
   .boot-skip{
     position:absolute; bottom:var(--space-5); right:var(--space-5);
@@ -270,7 +270,7 @@
     font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em;
     padding:.55em 1.1em; border-radius:4px; cursor:pointer;
   }
-  .boot-skip:hover{ color:var(--cyan); border-color:var(--cyan); }
+  .boot-skip:hover{ color:var(--accent); border-color:var(--accent); }
 
   footer{ border-top:1px solid var(--border-soft); padding:var(--space-5) 0; }
   .footer-inner{ display:flex; justify-content:space-between; align-items:center; gap:var(--space-3); flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--text-mute); letter-spacing:.05em; }
@@ -370,10 +370,10 @@
   <div class="nav-inner">
     <a class="brand" href="#top">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <circle cx="5" cy="6" r="2.4" stroke="#4dd8e8" stroke-width="1.4"/>
-        <circle cx="19" cy="6" r="2.4" stroke="#9c8cff" stroke-width="1.4"/>
-        <circle cx="12" cy="19" r="2.4" stroke="#4dd8e8" stroke-width="1.4"/>
-        <path d="M7 7.2L17 7.2M6.5 8L11 17M17.5 8L13 17" stroke="#3d4557" stroke-width="1.1"/>
+        <circle cx="5" cy="6" r="2.4" stroke="#ff7849" stroke-width="1.4"/>
+        <circle cx="19" cy="6" r="2.4" stroke="#f2c14e" stroke-width="1.4"/>
+        <circle cx="12" cy="19" r="2.4" stroke="#ff7849" stroke-width="1.4"/>
+        <path d="M7 7.2L17 7.2M6.5 8L11 17M17.5 8L13 17" stroke="#4a4338" stroke-width="1.1"/>
       </svg>
       AI_SYSTEMS_LAB
     </a>
@@ -433,17 +433,17 @@
             <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <radialGradient id="orbGrad" cx="50%" cy="42%" r="65%">
-                  <stop offset="0%" stop-color="#22304f"/>
-                  <stop offset="55%" stop-color="#141c30"/>
-                  <stop offset="100%" stop-color="#0a0e16"/>
+                  <stop offset="0%" stop-color="#362f25"/>
+                  <stop offset="55%" stop-color="#1d1a15"/>
+                  <stop offset="100%" stop-color="#0e0d0b"/>
                 </radialGradient>
               </defs>
 
-              <circle cx="150" cy="150" r="148" fill="url(#orbGrad)" stroke="#243050" stroke-width="1.5"/>
-              <circle cx="150" cy="150" r="148" fill="none" stroke="#4dd8e8" stroke-width="1" opacity="0.35"/>
-              <circle class="scan-ring" cx="150" cy="150" r="128" fill="none" stroke="#4dd8e8" stroke-width="1.5" stroke-dasharray="5 15" opacity="0.5"/>
+              <circle cx="150" cy="150" r="148" fill="url(#orbGrad)" stroke="#3a3227" stroke-width="1.5"/>
+              <circle cx="150" cy="150" r="148" fill="none" stroke="#ff7849" stroke-width="1" opacity="0.35"/>
+              <circle class="scan-ring" cx="150" cy="150" r="128" fill="none" stroke="#ff7849" stroke-width="1.5" stroke-dasharray="5 15" opacity="0.5"/>
 
-              <g stroke="#2a3a5c" stroke-width="1.5" opacity="0.6">
+              <g stroke="#3d3528" stroke-width="1.5" opacity="0.6">
                 <line x1="272" y1="150" x2="286" y2="150"/>
                 <line x1="255.7" y1="211" x2="267.8" y2="218"/>
                 <line x1="211" y1="255.7" x2="218" y2="267.8"/>
@@ -458,33 +458,33 @@
                 <line x1="255.7" y1="89" x2="267.8" y2="82"/>
               </g>
 
-              <circle cx="40" cy="80" r="3" fill="#4dd8e8" opacity="0.7"/>
-              <circle cx="260" cy="70" r="3" fill="#9c8cff" opacity="0.6"/>
-              <circle cx="252" cy="230" r="2.5" fill="#4dd8e8" opacity="0.5"/>
-              <circle cx="46" cy="220" r="2.5" fill="#9c8cff" opacity="0.55"/>
+              <circle cx="40" cy="80" r="3" fill="#ff7849" opacity="0.7"/>
+              <circle cx="260" cy="70" r="3" fill="#f2c14e" opacity="0.6"/>
+              <circle cx="252" cy="230" r="2.5" fill="#ff7849" opacity="0.5"/>
+              <circle cx="46" cy="220" r="2.5" fill="#f2c14e" opacity="0.55"/>
 
               <g class="avatar-figure" transform="translate(150 150) scale(1.15) translate(-150 -150)">
-                <line x1="150" y1="92" x2="150" y2="70" stroke="#9c8cff" stroke-width="3" stroke-linecap="round"/>
-                <circle class="pulse-dot" cx="150" cy="65" r="6" fill="#4dd8e8"/>
+                <line x1="150" y1="92" x2="150" y2="70" stroke="#f2c14e" stroke-width="3" stroke-linecap="round"/>
+                <circle class="pulse-dot" cx="150" cy="65" r="6" fill="#ff7849"/>
 
-                <rect x="110" y="92" width="80" height="66" rx="22" fill="#e9edf5"/>
-                <rect x="124" y="114" width="52" height="18" rx="9" fill="#0a0e16"/>
-                <circle class="pulse-dot" cx="139" cy="123" r="4" fill="#4dd8e8"/>
-                <circle class="pulse-dot" cx="161" cy="123" r="4" fill="#4dd8e8"/>
+                <rect x="110" y="92" width="80" height="66" rx="22" fill="#f2ebdd"/>
+                <rect x="124" y="114" width="52" height="18" rx="9" fill="#0e0d0b"/>
+                <circle class="pulse-dot" cx="139" cy="123" r="4" fill="#ff7849"/>
+                <circle class="pulse-dot" cx="161" cy="123" r="4" fill="#ff7849"/>
 
-                <rect x="92" y="158" width="116" height="96" rx="26" fill="#e9edf5"/>
-                <rect x="92" y="158" width="116" height="96" rx="26" fill="none" stroke="#c7cee0" stroke-width="1"/>
+                <rect x="92" y="158" width="116" height="96" rx="26" fill="#f2ebdd"/>
+                <rect x="92" y="158" width="116" height="96" rx="26" fill="none" stroke="#cfc5b0" stroke-width="1"/>
 
-                <circle cx="150" cy="198" r="16" fill="#0a0e16" stroke="#4dd8e8" stroke-width="2"/>
-                <circle class="pulse-dot" cx="150" cy="198" r="6" fill="#9c8cff"/>
+                <circle cx="150" cy="198" r="16" fill="#0e0d0b" stroke="#ff7849" stroke-width="2"/>
+                <circle class="pulse-dot" cx="150" cy="198" r="6" fill="#f2c14e"/>
 
-                <rect x="78" y="176" width="22" height="58" rx="11" fill="#d7dcec"/>
+                <rect x="78" y="176" width="22" height="58" rx="11" fill="#dfd6c3"/>
 
-                <path d="M200,190 Q228,168 224,130" stroke="#d7dcec" stroke-width="20" stroke-linecap="round" fill="none"/>
-                <circle cx="224" cy="122" r="15" fill="#e9edf5"/>
+                <path d="M200,190 Q228,168 224,130" stroke="#dfd6c3" stroke-width="20" stroke-linecap="round" fill="none"/>
+                <circle cx="224" cy="122" r="15" fill="#f2ebdd"/>
 
-                <path d="M244,100 Q252,108 244,118" stroke="#4dd8e8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-                <path d="M252,92 Q264,106 252,124" stroke="#9c8cff" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+                <path d="M244,100 Q252,108 244,118" stroke="#ff7849" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+                <path d="M252,92 Q264,106 252,124" stroke="#f2c14e" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
               </g>
             </svg>
           </div>
@@ -589,37 +589,37 @@
           <div class="exp-visual">
             <div class="exp-visual-cap">FIG_01 // SEMANTIC MATCHING PIPELINE</div>
             <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
-              <rect x="50" y="40" width="170" height="140" rx="6" fill="#0f1420" stroke="#1e2738"/>
-              <text x="65" y="60" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">RESUME.PDF</text>
-              <rect x="65" y="76" width="120" height="4" rx="2" fill="#2a3448"/>
-              <rect x="65" y="88" width="95" height="4" rx="2" fill="#2a3448"/>
-              <rect x="65" y="100" width="130" height="4" rx="2" fill="#2a3448"/>
-              <rect x="65" y="112" width="80" height="4" rx="2" fill="#2a3448"/>
-              <rect x="65" y="124" width="110" height="4" rx="2" fill="#2a3448"/>
-              <rect x="65" y="146" width="70" height="18" rx="4" fill="none" stroke="#4dd8e8" stroke-width="1"/>
-              <text x="100" y="158" font-family="IBM Plex Mono, monospace" font-size="8" fill="#4dd8e8" text-anchor="middle">EMBED</text>
+              <rect x="50" y="40" width="170" height="140" rx="6" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="65" y="60" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">RESUME.PDF</text>
+              <rect x="65" y="76" width="120" height="4" rx="2" fill="#3a342b"/>
+              <rect x="65" y="88" width="95" height="4" rx="2" fill="#3a342b"/>
+              <rect x="65" y="100" width="130" height="4" rx="2" fill="#3a342b"/>
+              <rect x="65" y="112" width="80" height="4" rx="2" fill="#3a342b"/>
+              <rect x="65" y="124" width="110" height="4" rx="2" fill="#3a342b"/>
+              <rect x="65" y="146" width="70" height="18" rx="4" fill="none" stroke="#ff7849" stroke-width="1"/>
+              <text x="100" y="158" font-family="IBM Plex Mono, monospace" font-size="8" fill="#ff7849" text-anchor="middle">EMBED</text>
 
-              <rect x="540" y="40" width="170" height="140" rx="6" fill="#0f1420" stroke="#1e2738"/>
-              <text x="555" y="60" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">JOB_REQ.JSON</text>
-              <rect x="555" y="76" width="100" height="4" rx="2" fill="#2a3448"/>
-              <rect x="555" y="88" width="130" height="4" rx="2" fill="#2a3448"/>
-              <rect x="555" y="100" width="90" height="4" rx="2" fill="#2a3448"/>
-              <rect x="555" y="112" width="115" height="4" rx="2" fill="#2a3448"/>
-              <rect x="555" y="124" width="75" height="4" rx="2" fill="#2a3448"/>
-              <rect x="620" y="146" width="70" height="18" rx="4" fill="none" stroke="#9c8cff" stroke-width="1"/>
-              <text x="655" y="158" font-family="IBM Plex Mono, monospace" font-size="8" fill="#9c8cff" text-anchor="middle">PARSE</text>
+              <rect x="540" y="40" width="170" height="140" rx="6" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="555" y="60" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">JOB_REQ.JSON</text>
+              <rect x="555" y="76" width="100" height="4" rx="2" fill="#3a342b"/>
+              <rect x="555" y="88" width="130" height="4" rx="2" fill="#3a342b"/>
+              <rect x="555" y="100" width="90" height="4" rx="2" fill="#3a342b"/>
+              <rect x="555" y="112" width="115" height="4" rx="2" fill="#3a342b"/>
+              <rect x="555" y="124" width="75" height="4" rx="2" fill="#3a342b"/>
+              <rect x="620" y="146" width="70" height="18" rx="4" fill="none" stroke="#f2c14e" stroke-width="1"/>
+              <text x="655" y="158" font-family="IBM Plex Mono, monospace" font-size="8" fill="#f2c14e" text-anchor="middle">PARSE</text>
 
-              <line x1="220" y1="85" x2="336" y2="100" stroke="#4dd8e8" stroke-width="1.3" stroke-dasharray="3 4"/>
-              <line x1="220" y1="140" x2="336" y2="122" stroke="#9c8cff" stroke-width="1.3" stroke-dasharray="3 4"/>
-              <line x1="424" y1="100" x2="540" y2="85" stroke="#9c8cff" stroke-width="1.3" stroke-dasharray="3 4"/>
-              <line x1="424" y1="122" x2="540" y2="140" stroke="#4dd8e8" stroke-width="1.3" stroke-dasharray="3 4"/>
+              <line x1="220" y1="85" x2="336" y2="100" stroke="#ff7849" stroke-width="1.3" stroke-dasharray="3 4"/>
+              <line x1="220" y1="140" x2="336" y2="122" stroke="#f2c14e" stroke-width="1.3" stroke-dasharray="3 4"/>
+              <line x1="424" y1="100" x2="540" y2="85" stroke="#f2c14e" stroke-width="1.3" stroke-dasharray="3 4"/>
+              <line x1="424" y1="122" x2="540" y2="140" stroke="#ff7849" stroke-width="1.3" stroke-dasharray="3 4"/>
 
-              <circle cx="380" cy="110" r="44" fill="#0f1420" stroke="#4dd8e8" stroke-width="1.5"/>
-              <text x="380" y="106" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="700" fill="#4dd8e8" text-anchor="middle">94%</text>
-              <text x="380" y="124" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1" fill="#6d7690" text-anchor="middle">MATCH_SCORE</text>
+              <circle cx="380" cy="110" r="44" fill="#1a1814" stroke="#ff7849" stroke-width="1.5"/>
+              <text x="380" y="106" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="700" fill="#ff7849" text-anchor="middle">94%</text>
+              <text x="380" y="124" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1" fill="#8a8170" text-anchor="middle">MATCH_SCORE</text>
 
-              <text x="270" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6d7690" text-anchor="middle">MiniLM</text>
-              <text x="490" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6d7690" text-anchor="middle">LLaMA 3</text>
+              <text x="270" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#8a8170" text-anchor="middle">MiniLM</text>
+              <text x="490" y="70" font-family="IBM Plex Mono, monospace" font-size="9" fill="#8a8170" text-anchor="middle">LLaMA 3</text>
             </svg>
           </div>
           <div class="exp-columns">
@@ -650,39 +650,39 @@
             <svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <marker id="arrowC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M0,0 L10,5 L0,10 z" fill="#4dd8e8"/>
+                  <path d="M0,0 L10,5 L0,10 z" fill="#ff7849"/>
                 </marker>
                 <marker id="arrowV" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M0,0 L10,5 L0,10 z" fill="#9c8cff"/>
+                  <path d="M0,0 L10,5 L0,10 z" fill="#f2c14e"/>
                 </marker>
               </defs>
 
-              <rect x="40" y="30" width="150" height="34" rx="6" fill="#0f1420" stroke="#1e2738"/>
-              <text x="115" y="51" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">WIKIPEDIA_API</text>
-              <rect x="40" y="103" width="150" height="34" rx="6" fill="#0f1420" stroke="#1e2738"/>
-              <text x="115" y="124" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">ARXIV_API</text>
-              <rect x="40" y="176" width="150" height="34" rx="6" fill="#0f1420" stroke="#1e2738"/>
-              <text x="115" y="197" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">FAISS_VECTOR_DB</text>
+              <rect x="40" y="30" width="150" height="34" rx="6" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="115" y="51" font-family="IBM Plex Mono, monospace" font-size="10" fill="#c4baa6" text-anchor="middle">WIKIPEDIA_API</text>
+              <rect x="40" y="103" width="150" height="34" rx="6" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="115" y="124" font-family="IBM Plex Mono, monospace" font-size="10" fill="#c4baa6" text-anchor="middle">ARXIV_API</text>
+              <rect x="40" y="176" width="150" height="34" rx="6" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="115" y="197" font-family="IBM Plex Mono, monospace" font-size="10" fill="#c4baa6" text-anchor="middle">FAISS_VECTOR_DB</text>
 
-              <line x1="190" y1="47" x2="336" y2="105" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowC)"/>
-              <line x1="190" y1="120" x2="338" y2="120" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowC)"/>
-              <line x1="190" y1="193" x2="336" y2="135" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowC)"/>
+              <line x1="190" y1="47" x2="336" y2="105" stroke="#ff7849" stroke-width="1.3" marker-end="url(#arrowC)"/>
+              <line x1="190" y1="120" x2="338" y2="120" stroke="#ff7849" stroke-width="1.3" marker-end="url(#arrowC)"/>
+              <line x1="190" y1="193" x2="336" y2="135" stroke="#ff7849" stroke-width="1.3" marker-end="url(#arrowC)"/>
 
-              <circle cx="380" cy="120" r="40" fill="#0f1420" stroke="#9c8cff" stroke-width="1.5"/>
-              <text x="380" y="117" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9c8cff" text-anchor="middle">QUERY</text>
-              <text x="380" y="130" font-family="IBM Plex Mono, monospace" font-size="8" fill="#6d7690" text-anchor="middle">ROUTED</text>
+              <circle cx="380" cy="120" r="40" fill="#1a1814" stroke="#f2c14e" stroke-width="1.5"/>
+              <text x="380" y="117" font-family="IBM Plex Mono, monospace" font-size="11" fill="#f2c14e" text-anchor="middle">QUERY</text>
+              <text x="380" y="130" font-family="IBM Plex Mono, monospace" font-size="8" fill="#8a8170" text-anchor="middle">ROUTED</text>
 
-              <line x1="420" y1="120" x2="556" y2="120" stroke="#9c8cff" stroke-width="1.3" marker-end="url(#arrowV)"/>
-              <rect x="560" y="100" width="150" height="40" rx="6" fill="#0f1420" stroke="#1e2738"/>
-              <text x="635" y="118" font-family="IBM Plex Mono, monospace" font-size="10" fill="#aab2c5" text-anchor="middle">GPT-2</text>
-              <text x="635" y="132" font-family="IBM Plex Mono, monospace" font-size="8" fill="#6d7690" text-anchor="middle">GENERATE</text>
+              <line x1="420" y1="120" x2="556" y2="120" stroke="#f2c14e" stroke-width="1.3" marker-end="url(#arrowV)"/>
+              <rect x="560" y="100" width="150" height="40" rx="6" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="635" y="118" font-family="IBM Plex Mono, monospace" font-size="10" fill="#c4baa6" text-anchor="middle">GPT-2</text>
+              <text x="635" y="132" font-family="IBM Plex Mono, monospace" font-size="8" fill="#8a8170" text-anchor="middle">GENERATE</text>
 
-              <line x1="710" y1="120" x2="750" y2="120" stroke="#3ddc97" stroke-width="1.3"/>
-              <text x="755" y="124" font-family="IBM Plex Mono, monospace" font-size="9" fill="#3ddc97">ANSWER</text>
+              <line x1="710" y1="120" x2="750" y2="120" stroke="#a8d672" stroke-width="1.3"/>
+              <text x="755" y="124" font-family="IBM Plex Mono, monospace" font-size="9" fill="#a8d672">ANSWER</text>
 
-              <circle cx="260" cy="76" r="2.5" fill="#4dd8e8"/>
-              <circle cx="262" cy="120" r="2.5" fill="#4dd8e8"/>
-              <circle cx="260" cy="164" r="2.5" fill="#4dd8e8"/>
+              <circle cx="260" cy="76" r="2.5" fill="#ff7849"/>
+              <circle cx="262" cy="120" r="2.5" fill="#ff7849"/>
+              <circle cx="260" cy="164" r="2.5" fill="#ff7849"/>
             </svg>
           </div>
           <div class="exp-columns">
@@ -714,37 +714,37 @@
             <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <marker id="arrowA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M0,0 L10,5 L0,10 z" fill="#4dd8e8"/>
+                  <path d="M0,0 L10,5 L0,10 z" fill="#ff7849"/>
                 </marker>
               </defs>
 
-              <rect x="30" y="30" width="180" height="160" rx="10" fill="#0f1420" stroke="#1e2738"/>
-              <text x="48" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">LOGIN</text>
-              <rect x="48" y="68" width="144" height="18" rx="4" fill="#151d2c" stroke="#2a3448"/>
-              <rect x="48" y="94" width="144" height="18" rx="4" fill="#151d2c" stroke="#2a3448"/>
-              <rect x="48" y="130" width="144" height="26" rx="4" fill="none" stroke="#4dd8e8" stroke-width="1.2"/>
-              <text x="120" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#4dd8e8" text-anchor="middle">SIGN_IN</text>
+              <rect x="30" y="30" width="180" height="160" rx="10" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="48" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">LOGIN</text>
+              <rect x="48" y="68" width="144" height="18" rx="4" fill="#1c1a16" stroke="#3a342b"/>
+              <rect x="48" y="94" width="144" height="18" rx="4" fill="#1c1a16" stroke="#3a342b"/>
+              <rect x="48" y="130" width="144" height="26" rx="4" fill="none" stroke="#ff7849" stroke-width="1.2"/>
+              <text x="120" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#ff7849" text-anchor="middle">SIGN_IN</text>
 
-              <line x1="210" y1="110" x2="286" y2="110" stroke="#4dd8e8" stroke-width="1.3" marker-end="url(#arrowA)"/>
+              <line x1="210" y1="110" x2="286" y2="110" stroke="#ff7849" stroke-width="1.3" marker-end="url(#arrowA)"/>
 
-              <rect x="290" y="30" width="180" height="160" rx="10" fill="#0f1420" stroke="#1e2738"/>
-              <text x="308" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">BROWSE</text>
-              <rect x="308" y="68" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
-              <rect x="362" y="68" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
-              <rect x="416" y="68" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
-              <rect x="308" y="122" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
-              <rect x="362" y="122" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
-              <rect x="416" y="122" width="46" height="46" rx="4" fill="#151d2c" stroke="#2a3448"/>
+              <rect x="290" y="30" width="180" height="160" rx="10" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="308" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">BROWSE</text>
+              <rect x="308" y="68" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
+              <rect x="362" y="68" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
+              <rect x="416" y="68" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
+              <rect x="308" y="122" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
+              <rect x="362" y="122" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
+              <rect x="416" y="122" width="46" height="46" rx="4" fill="#1c1a16" stroke="#3a342b"/>
 
-              <line x1="470" y1="110" x2="546" y2="110" stroke="#9c8cff" stroke-width="1.3" marker-end="url(#arrowA)"/>
+              <line x1="470" y1="110" x2="546" y2="110" stroke="#f2c14e" stroke-width="1.3" marker-end="url(#arrowA)"/>
 
-              <rect x="550" y="30" width="180" height="160" rx="10" fill="#0f1420" stroke="#1e2738"/>
-              <text x="568" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6d7690" letter-spacing="1">CHECKOUT</text>
-              <rect x="568" y="68" width="144" height="10" rx="2" fill="#151d2c"/>
-              <rect x="568" y="86" width="144" height="10" rx="2" fill="#151d2c"/>
-              <rect x="568" y="104" width="144" height="10" rx="2" fill="#151d2c"/>
-              <rect x="568" y="130" width="144" height="26" rx="4" fill="none" stroke="#9c8cff" stroke-width="1.2"/>
-              <text x="640" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9c8cff" text-anchor="middle">PAY_NOW</text>
+              <rect x="550" y="30" width="180" height="160" rx="10" fill="#1a1814" stroke="#2e2a23"/>
+              <text x="568" y="54" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8a8170" letter-spacing="1">CHECKOUT</text>
+              <rect x="568" y="68" width="144" height="10" rx="2" fill="#1c1a16"/>
+              <rect x="568" y="86" width="144" height="10" rx="2" fill="#1c1a16"/>
+              <rect x="568" y="104" width="144" height="10" rx="2" fill="#1c1a16"/>
+              <rect x="568" y="130" width="144" height="26" rx="4" fill="none" stroke="#f2c14e" stroke-width="1.2"/>
+              <text x="640" y="147" font-family="IBM Plex Mono, monospace" font-size="9" fill="#f2c14e" text-anchor="middle">PAY_NOW</text>
             </svg>
           </div>
           <div class="exp-columns">
@@ -946,7 +946,7 @@
           var dist = Math.sqrt(dx*dx+dy*dy);
           if(dist < LINK_DIST){
             var op = (1 - dist/LINK_DIST) * 0.35;
-            ctx.strokeStyle = j % 2 === 0 ? 'rgba(77,216,232,' + op + ')' : 'rgba(156,140,255,' + op + ')';
+            ctx.strokeStyle = j % 2 === 0 ? 'rgba(255,120,73,' + op + ')' : 'rgba(242,193,78,' + op + ')';
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
           }
@@ -955,7 +955,7 @@
       for(var i=0;i<nodes.length;i++){
         var n = nodes[i];
         ctx.beginPath();
-        ctx.fillStyle = 'rgba(233,237,245,0.55)';
+        ctx.fillStyle = 'rgba(242,235,221,0.55)';
         ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
         ctx.fill();
       }
