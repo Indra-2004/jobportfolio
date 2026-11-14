@@ -272,27 +272,46 @@
   .contact-note strong{ color:var(--text); }
 
   /* ---------- BOOT SCREEN ---------- */
+  @property --r{ syntax:'<length>'; inherits:false; initial-value:0px; }
   #boot-screen{
-    position:fixed; inset:0; z-index:9999; background:var(--bg);
-    display:flex; align-items:center; justify-content:center;
-    transition:opacity .6s ease, visibility .6s ease;
+    position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
+    background:
+      radial-gradient(60vmax 40vmax at 15% 10%, rgba(255,120,73,.12), transparent 60%),
+      radial-gradient(50vmax 40vmax at 90% 90%, rgba(255,79,139,.09), transparent 60%),
+      var(--bg);
+    --r:0px;
+    -webkit-mask:radial-gradient(circle at 50% 50%, transparent var(--r), #000 calc(var(--r) + 1px));
+            mask:radial-gradient(circle at 50% 50%, transparent var(--r), #000 calc(var(--r) + 1px));
+    transition:--r .8s cubic-bezier(.7,0,.25,1), visibility 0s linear .8s;
   }
-  #boot-screen.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+  #boot-screen.hidden{ --r:150vmax; visibility:hidden; pointer-events:none; }
   html.booting, html.booting body{ overflow:hidden; }
-  .boot-inner{ width:min(480px,84vw); }
-  .boot-lines{
-    font-family:var(--font-mono); font-size:.82rem; line-height:1.9; color:var(--accent);
-    min-height:8.6em; white-space:pre-wrap; word-break:break-word;
-  }
+  .boot-ring{ position:fixed; left:50%; top:50%; width:0; height:0; border-radius:50%; border:2px solid var(--accent); box-shadow:0 0 30px var(--accent); transform:translate(-50%,-50%); opacity:0; pointer-events:none; z-index:10000; }
+  .boot-ring.go{ width:300vmax; height:300vmax; opacity:0; transition:width .8s cubic-bezier(.7,0,.25,1), height .8s cubic-bezier(.7,0,.25,1), opacity .8s ease; animation:ring-in .8s ease; }
+  @keyframes ring-in{ 0%{ opacity:1; } 70%{ opacity:.8; } 100%{ opacity:0; } }
+  .boot-inner{ width:min(580px, 88vw); }
+  .boot-file{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.14em; color:var(--text-mute); margin-bottom:var(--space-3); display:flex; justify-content:space-between; }
+  .boot-lines{ font-family:var(--font-mono); font-size:clamp(.72rem, .5vw + .6rem, .85rem); line-height:2; min-height:10em; }
+  .bl{ display:flex; align-items:baseline; gap:.6em; white-space:nowrap; }
+  .bl .l{ min-width:0; overflow:hidden; text-overflow:ellipsis; color:var(--text-dim); }
+  .bl .l .pr{ color:var(--accent-3); }
+  .bl .l .cmd{ color:var(--accent); }
+  .bl .dots{ flex:1; min-width:1.5em; border-bottom:1px dotted var(--border); transform:translateY(-.35em); opacity:0; transition:opacity .15s ease; }
+  .bl .r{ color:var(--accent-2); opacity:0; transform:translateX(-4px); transition:opacity .18s ease, transform .18s ease; }
+  .bl.done .dots, .bl.done .r{ opacity:1; transform:none; }
+  .bl .r.t{ color:#a8d672; }
+  .bl .cur{ display:inline-block; width:.55em; height:1em; vertical-align:-.15em; background:var(--accent); animation:blink 1s steps(1) infinite; }
+  .boot-name{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.3rem, 3.4vw, 2.2rem); line-height:1.1; letter-spacing:-.01em; margin-top:var(--space-4); min-height:2.3em; color:var(--text); }
+  .boot-name .sur{ background:linear-gradient(100deg, var(--accent), var(--accent-3), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .boot-bar-row{ display:flex; align-items:center; gap:var(--space-3); margin-top:var(--space-4); }
   .boot-bar{ flex:1; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
-  .boot-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); transition:width 2.6s linear; }
+  .boot-bar-fill{ height:100%; width:100%; transform-origin:0 50%; transform:scaleX(0); background:linear-gradient(90deg,var(--accent),var(--accent-3),var(--accent-2)); transition:transform .25s ease-out; }
   .boot-percent{ font-family:var(--font-mono); font-size:.76rem; color:var(--text-mute); width:3.4em; text-align:right; font-variant-numeric:tabular-nums; }
   .boot-skip{
-    position:absolute; bottom:var(--space-5); right:var(--space-5);
+    position:absolute; bottom:var(--space-5); left:50%; transform:translateX(-50%);
     background:none; border:1px solid var(--border); color:var(--text-mute);
-    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em;
-    padding:.55em 1.1em; border-radius:4px; cursor:pointer;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; white-space:nowrap;
+    padding:.6em 1.2em; border-radius:999px; cursor:pointer;
   }
   .boot-skip:hover{ color:var(--accent); border-color:var(--accent); }
 
@@ -382,78 +401,119 @@
   }
 </style>
 
-<div id="boot-screen">
+<div id="boot-screen" role="status" aria-label="Loading portfolio">
   <div class="boot-inner">
-    <div class="boot-lines mono" id="bootLines"></div>
+    <div class="boot-file"><span>candidate_pipeline.py</span><span>RAG v3</span></div>
+    <div class="boot-lines" id="bootLines"></div>
+    <div class="boot-name" id="bootName" aria-hidden="true"></div>
     <div class="boot-bar-row">
       <div class="boot-bar"><div class="boot-bar-fill" id="bootFill"></div></div>
       <span class="boot-percent" id="bootPercent">0%</span>
     </div>
   </div>
-  <button class="boot-skip" id="bootSkip" type="button">SKIP →</button>
+  <button class="boot-skip" id="bootSkip" type="button">PRESS ANY KEY OR TAP TO SKIP</button>
 </div>
+<div class="boot-ring" id="bootRing" aria-hidden="true"></div>
 <script>
   (function(){
     var screen = document.getElementById('boot-screen');
+    var ring = document.getElementById('bootRing');
     if(!screen) return;
+    var root = document.documentElement;
+    function removeAll(){ [screen, ring].forEach(function(el){ if(el && el.parentNode) el.parentNode.removeChild(el); }); }
+
+    // show only on the first visit (add ?boot to the URL to replay it)
+    var KEY = 'boot_seen_v3', force = /[?&]boot\b/.test(location.search), seen = false;
+    try { seen = localStorage.getItem(KEY) === '1'; localStorage.setItem(KEY, '1'); } catch(e){}
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduceMotion){ screen.parentNode.removeChild(screen); return; }
+    if(reduceMotion || (seen && !force)){ removeAll(); return; }
 
-    document.documentElement.classList.add('booting');
-    var linesEl = document.getElementById('bootLines');
-    var fill = document.getElementById('bootFill');
-    var pct = document.getElementById('bootPercent');
-    var skipBtn = document.getElementById('bootSkip');
-    var BOOT_DURATION = 2600;
+    root.classList.add('booting');
+    var linesEl = document.getElementById('bootLines'), nameEl = document.getElementById('bootName');
+    var fill = document.getElementById('bootFill'), pct = document.getElementById('bootPercent');
+    var t0 = performance.now(), finished = false, typedChars = 0;
 
-    var script = [
-      'BOOTING AI_SYSTEMS_LAB v2.5.0',
-      'LOADING NEURAL INTERFACE...',
-      'INITIALIZING RESEARCH MODULES...',
-      'VERIFYING IDENTITY: INDRASENA_REDDY_VENNAPOOSA',
-      'SYSTEM STATUS: ACTIVE'
+    // a tiny RAG pipeline that "processes" the candidate
+    var LINES = [
+      { cmd:'load',     arg:'resume.pdf',                          res:'ok' },
+      { cmd:'embed',    arg:'skills[python, langgraph, faiss]',    res:'384-d' },
+      { cmd:'retrieve', arg:'projects top_k=2',                    res:'ResumeXpert, RAG-QA' },
+      { cmd:'generate', arg:'candidate_profile',                   res:'done' },
+      { cmd:'assert',   arg:'open_to_work',                        res:'true', t:true }
     ];
-    var lineIndex = 0, charIndex = 0, finished = false;
+    var TOTAL = LINES.reduce(function(n, l){ return n + l.cmd.length + l.arg.length + 1; }, 0);
 
-    function typeNext(){
-      if(finished || lineIndex >= script.length) return;
-      var current = script[lineIndex];
-      var printed = script.slice(0, lineIndex).map(function(l){ return '> ' + l; }).join('\n');
-      linesEl.textContent = (printed ? printed + '\n' : '') + '> ' + current.slice(0, charIndex);
-      if(charIndex <= current.length){
-        charIndex++;
-        setTimeout(typeNext, 14 + Math.random() * 20);
-      } else {
-        lineIndex++; charIndex = 0;
-        setTimeout(typeNext, 110);
-      }
+    function setProgress(p){
+      p = Math.max(0, Math.min(1, p));
+      fill.style.transform = 'scaleX(' + p + ')';
+      pct.textContent = Math.round(p * 100) + '%';
     }
-    typeNext();
 
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        fill.style.width = '100%';
-      });
+    // page is "ready" once everything (incl. fonts) has loaded, capped so it never hangs
+    var ready = new Promise(function(res){
+      var done = function(){ (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(res, res); };
+      if(document.readyState === 'complete') done(); else addEventListener('load', done);
+      setTimeout(res, 2600);
     });
-    var pctStart = null;
-    function tickPercent(ts){
-      if(finished) return;
-      if(pctStart === null) pctStart = ts;
-      var p = Math.min(100, Math.round((ts - pctStart) / BOOT_DURATION * 100));
-      pct.textContent = p + '%';
-      if(p < 100) requestAnimationFrame(tickPercent);
-    }
-    requestAnimationFrame(tickPercent);
 
-    function finishBoot(){
+    function typeLine(i){
+      if(finished) return;
+      if(i >= LINES.length){ decodeName(); return; }
+      var L = LINES[i];
+      var row = document.createElement('div'); row.className = 'bl';
+      row.innerHTML = '<span class="l"><span class="pr">&gt;</span> <span class="cmd"></span> <span class="arg"></span><span class="cur"></span></span><span class="dots"></span><span class="r' + (L.t ? ' t' : '') + '"></span>';
+      linesEl.appendChild(row);
+      var cmdEl = row.querySelector('.cmd'), argEl = row.querySelector('.arg'), cur = row.querySelector('.cur');
+      row.querySelector('.r').textContent = L.res;
+      var full = L.cmd + ' ' + L.arg, k = 0;
+      (function tick(){
+        if(finished) return;
+        k += 2; typedChars += 2;
+        var s = full.slice(0, k);
+        cmdEl.textContent = s.slice(0, L.cmd.length);
+        argEl.textContent = s.slice(L.cmd.length + 1);
+        setProgress(0.85 * typedChars / TOTAL);
+        if(k < full.length){ setTimeout(tick, 16); }
+        else { cur.remove(); row.classList.add('done'); setTimeout(function(){ typeLine(i + 1); }, 90); }
+      })();
+    }
+
+    // name resolves from scrambled characters
+    function decodeName(){
+      if(finished) return;
+      var A = 'INDRASENA REDDY', B = 'VENNAPOOSA', POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*';
+      var start = performance.now(), DUR = 520;
+      function scramble(str, p){
+        var fixed = Math.floor(str.length * p), out = '';
+        for(var i = 0; i < str.length; i++){
+          out += (i < fixed || str[i] === ' ') ? str[i] : POOL[(Math.random() * POOL.length) | 0];
+        }
+        return out;
+      }
+      (function frame(now){
+        if(finished) return;
+        var p = Math.min(1, (now - start) / DUR);
+        nameEl.innerHTML = scramble(A, p) + '<br><span class="sur">' + scramble(B, Math.max(0, p * 1.15 - .15)) + '</span>';
+        setProgress(0.85 + 0.1 * p);
+        if(p < 1) requestAnimationFrame(frame);
+        else ready.then(function(){ setProgress(1); setTimeout(finish, 260); });
+      })(start);
+    }
+
+    function finish(){
       if(finished) return;
       finished = true;
+      ring.classList.add('go');
       screen.classList.add('hidden');
-      document.documentElement.classList.remove('booting');
-      setTimeout(function(){ if(screen.parentNode) screen.parentNode.removeChild(screen); }, 650);
+      root.classList.remove('booting');
+      setTimeout(removeAll, 900);
     }
-    setTimeout(finishBoot, BOOT_DURATION + 350);
-    skipBtn.addEventListener('click', finishBoot);
+
+    // any input skips
+    ['keydown', 'pointerdown', 'wheel', 'touchstart'].forEach(function(ev){
+      addEventListener(ev, function once(){ removeEventListener(ev, once); finish(); }, { passive:true });
+    });
+    typeLine(0);
   })();
 </script>
 
